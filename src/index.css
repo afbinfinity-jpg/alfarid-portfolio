@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-ink font-body;
+    overflow-x: hidden;
+    margin: 0;
+  }
+
+  ::selection {
+    background-color: #00C2FF;
+    color: #07070C;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0A0A0F;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #009ACC;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #00C2FF;
+  }
+
+  /* Prevent iOS Safari from zooming on input focus */
+  input, textarea, select {
+    font-size: 16px;
+  }
+}
+
+@layer components {
+  /* ── Noise texture overlay ─────────────────────────────────── */
+  .noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ── Magnetic button ───────────────────────────────────────── */
+  .magnetic-btn {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .magnetic-btn:hover {
+    transform: scale(1.03) translateY(-1px);
+  }
+  .magnetic-btn:active {
+    transform: scale(0.98);
+  }
+  .magnetic-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .magnetic-btn:hover::before {
+    transform: translateY(0);
+  }
+
+  /* ── Lift on hover ─────────────────────────────────────────── */
+  .lift-on-hover {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .lift-on-hover:hover {
+    transform: translateY(-1px);
+  }
+
+  /* ── Gradient text ─────────────────────────────────────────── */
+  .gradient-text {
+    background: linear-gradient(135deg, #00C2FF 0%, #7B61FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Glass surfaces ────────────────────────────────────────── */
+  .glass {
+    background: rgba(10, 10, 20, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 194, 255, 0.1);
+  }
+
+  .glass-dark {
+    background: rgba(7, 7, 12, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* ── Ring pulse (status dots) ──────────────────────────────── */
+  .ring-pulse {
+    animation: ring-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes ring-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(0, 194, 255, 0.55); }
+    70%  { box-shadow: 0 0 0 10px rgba(0, 194, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 194, 255, 0); }
+  }
+
+  /* ── Subtle dot grid background ────────────────────────────── */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(0, 194, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 194, 255, 0.045) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* ── Feature card base ─────────────────────────────────────── */
+  .feature-card {
+    @apply rounded-3xl bg-surface border border-divider p-6 sm:p-8;
+  }
+
+  /* ── Service tile (dark grid) ──────────────────────────────── */
+  .svc-tile {
+    @apply bg-deep p-8 sm:p-10 transition-colors duration-200;
+  }
+  .svc-tile:hover {
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  /* ── Text balance utility ──────────────────────────────────── */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+}
+
+@layer utilities {
+  .perspective {
+    perspective: 1200px;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+}
+
+/* ── Pillar sweep (used in Pillars section) ────────────────────────────────── */
+@keyframes pillar-sweep {
+  0%   { transform: translateX(-110%); }
+  50%  { transform: translateX(110%); }
+  100% { transform: translateX(110%); }
+}
+
+/* ── Green ring pulse (available / online status dot) ──────────────────────── */
+.ring-pulse-green {
+  animation: ring-pulse-green 2.4s ease-in-out infinite;
+}
+@keyframes ring-pulse-green {
+  0%   { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6); }
+  70%  { box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+
+/* ── Hover shake (interactive GIF accent) ──────────────────────────────────── */
+@keyframes shake-wiggle {
+  0%, 100% { transform: rotate(0deg) translateX(0); }
+  20%      { transform: rotate(2.5deg) translateX(-2px); }
+  40%      { transform: rotate(-2.5deg) translateX(2px); }
+  60%      { transform: rotate(2deg) translateX(-1px); }
+  80%      { transform: rotate(-1.5deg) translateX(1px); }
+}
+.shake-on-hover:hover {
+  animation: shake-wiggle 0.45s ease-in-out;
+}
+
+/* ── Reduced motion: disable all CSS keyframe animations ───────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
