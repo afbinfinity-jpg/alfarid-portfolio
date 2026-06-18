@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, ArrowDown, Menu, X, Mail, ChevronLeft, ChevronRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TextScramble } from './components/ui/TextScramble'
+import { Analytics } from '@vercel/analytics/react'
 
 function LinkedinIcon({ className, strokeWidth = 1.8 }) {
   return (
@@ -1167,6 +1168,7 @@ export default function App() {
         <ContactForm/>
       </main>
       <Footer/>
+      <Analytics />
     </div>
   )
 }
