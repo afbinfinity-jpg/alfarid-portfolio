@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowUpRight, ArrowDown, Menu, X, Mail, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowUpRight, ArrowDown, ArrowRight, Menu, X, Mail } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TextScramble } from './components/ui/TextScramble'
 import { Analytics } from '@vercel/analytics/react'
@@ -24,13 +22,12 @@ function GithubIcon({ className, strokeWidth = 1.8 }) {
     </svg>
   )
 }
-gsap.registerPlugin(ScrollTrigger)
 
 const prefersReducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Constants
+// Content
 // ─────────────────────────────────────────────────────────────────────────────
 
 const NAV_LINKS = [
@@ -40,14 +37,58 @@ const NAV_LINKS = [
   { label: 'Contact',  href: '#contact'  },
 ]
 
-// PLACEHOLDER — replace end values with your real metrics before launch
-const PILLARS = [
-  { eyebrow: 'AUTOMATIONS BUILT',   end: 20,  suffix: '+', desc: 'workflows shipped to production'          },
-  { eyebrow: 'HOURS SAVED / MONTH', end: 300, suffix: '+', desc: 'of manual work eliminated across clients' },
-  { eyebrow: 'TOOLS INTEGRATED',    end: 40,  suffix: '+', desc: 'APIs and platforms connected'             },
+const CAPABILITIES = [
+  {
+    n: '01',
+    title: 'AI Reception & Booking',
+    desc: 'AI handles incoming website and WhatsApp enquiries 24/7, answers approved treatment questions, qualifies leads, and books appointments.',
+    tools: [
+      'AI website assistant',
+      'WhatsApp conversations',
+      'Lead qualification & appointment booking',
+      'Treatment FAQs & pricing',
+      'Human handoff when needed',
+    ],
+  },
+  {
+    n: '02',
+    title: 'Lead Follow-Up & Recovery',
+    desc: "Automatically follows up with leads your front desk didn't reach, missed calls, and people who showed interest but never booked.",
+    tools: [
+      'Uncontacted lead follow-up',
+      'Missed-call SMS/WhatsApp recovery',
+      'Multi-step follow-up sequences',
+      'Lead reactivation',
+      'Automatic stop when the lead replies or books',
+    ],
+  },
+  {
+    n: '03',
+    title: 'Patient Retention & Rebooking',
+    desc: "Keeps existing clients engaged after their appointment and brings them back when they're due for another treatment.",
+    tools: [
+      'Appointment reminders',
+      'No-show recovery',
+      'Post-treatment follow-up',
+      'Review requests',
+      'Rebooking reminders',
+      'Membership/package follow-up',
+    ],
+  },
 ]
 
 const PROJECTS = [
+  {
+    id:       3,
+    title:    'AI Med Spa Lead & Booking System',
+    subtitle: 'AI-powered lead capture, qualification, follow-up, and appointment booking — built specifically for aesthetic clinics.',
+    problem:  'Aesthetic clinics lose enquiries to timing. Messages arrive after hours and over the weekend, the front desk is busy with clients in the room, missed calls go unreturned, and people who asked about a treatment but never booked are quietly forgotten.',
+    solution: 'Built an AI system that answers website and WhatsApp enquiries around the clock, handles approved treatment and pricing questions, qualifies the lead, and books the appointment straight into the clinic calendar. Missed calls trigger an immediate text back, unbooked leads move into multi-step follow-up, and every sequence stops the moment the lead replies or books. Anything outside its remit is handed to a human.',
+    result:   'Enquiries get answered in seconds instead of hours, missed calls are recovered the same day, and follow-up runs without anyone remembering to do it — so the calendar stays full without adding front-desk hours.',
+    tools:    ['WhatsApp', 'AI Agent', 'n8n', 'Calendar', 'CRM'],
+    accent:   'primary',
+    image:    '/screenshots/med-spa-dashboard.png',
+  },
   {
     id:       1,
     title:    'AI Lead Generation & Qualification Platform',
@@ -58,28 +99,6 @@ const PROJECTS = [
     tools:    ['Next.js 16', 'Supabase', 'n8n', 'Claude', 'Vapi', 'Cal.com'],
     accent:   'primary',
     image:    '/screenshots/project-1.png',
-  },
-  {
-    id:       2,
-    title:    'AI Receptionist & Appointment Booking System',
-    subtitle: 'AI-powered receptionist across web chat and Telegram',
-    problem:  'Businesses were spending valuable time answering repetitive inquiries, collecting customer information manually, and managing appointment bookings across multiple channels.',
-    solution: 'Built an AI-powered receptionist that engages with customers through web chat and Telegram, answers questions naturally, captures lead information, syncs data to CRM systems automatically, and guides prospects to book appointments without human intervention.',
-    result:   'Created a fully automated lead capture and appointment booking workflow that streamlines customer interactions, centralizes lead management, and reduces administrative workload while maintaining a seamless customer experience.',
-    tools:    ['Next.js', 'OpenAI', 'MongoDB', 'Google Sheets', 'Calendly', 'Telegram', 'Vercel'],
-    accent:   'accent',
-    image:    '/screenshots/project-2.png',
-  },
-  {
-    id:       3,
-    title:    'AI Lead Discovery & Outreach Engine',
-    subtitle: 'Automated prospect discovery, scoring, and personalized outreach at scale',
-    problem:  'Finding qualified prospects and creating personalized outreach at scale is time-consuming, repetitive, and difficult to manage across multiple tools and workflows.',
-    solution: 'Built an AI-powered lead generation and outreach platform that discovers prospects, enriches and scores leads, generates personalized messaging, orchestrates automated outreach campaigns, and manages background processing through a scalable workflow engine.',
-    result:   'Created a streamlined lead acquisition system that automates prospect discovery, prioritization, personalization, and outreach, enabling businesses to scale growth efforts while reducing manual research and campaign management.',
-    tools:    ['Trigger.dev', 'Apify', 'OpenAI', 'MongoDB', 'Email Automation', 'AI Scoring'],
-    accent:   'primary',
-    image:    '/screenshots/project-3.png',
   },
   {
     id:       4,
@@ -101,9 +120,34 @@ const SOCIAL_LINKS = [
 
 const CONTACT_EMAIL = 'afbinfinity@gmail.com'
 
+const Emph = ({ children }) => <span className="text-ink font-medium">{children}</span>
+
+const ABOUT_POINTS = [
+  { k: 'Role',     text: (<>I&apos;m an <Emph>AI Automation Builder</Emph> and <Emph>AI Auditor</Emph> focused on designing systems that eliminate repetitive work and help businesses operate more efficiently.</>) },
+  { k: 'Studying', text: (<>Currently studying at <Emph>Zayed University</Emph> while building AI agents, automation workflows, voice AI systems, SaaS platforms, and business process automation solutions.</>) },
+  { k: 'Built',    text: (<>I&apos;ve built <Emph>lead generation platforms</Emph>, <Emph>AI receptionists</Emph>, <Emph>document processing systems</Emph>, <Emph>voice AI agents</Emph>, and internal business tools that automate complex workflows from end to end.</>) },
+]
+
 // ─────────────────────────────────────────────────────────────────────────────
-// Utility components
+// Primitives
 // ─────────────────────────────────────────────────────────────────────────────
+
+/* One reveal, used for every section. Cheaper and calmer than per-section
+   GSAP timelines, and it degrades to "just visible" under reduced motion. */
+function useReveal() {
+  useEffect(() => {
+    if (prefersReducedMotion()) {
+      document.querySelectorAll('.reveal').forEach(n => n.classList.add('in'))
+      return
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } })
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 })
+    const nodes = document.querySelectorAll('.reveal:not(.in)')
+    nodes.forEach(n => io.observe(n))
+    return () => io.disconnect()
+  }, [])
+}
 
 function useInView(ref, options) {
   const [inView, setInView] = useState(false)
@@ -119,35 +163,35 @@ function useInView(ref, options) {
   return inView
 }
 
-function CountUp({ end, suffix = '', duration = 2000 }) {
-  const [value, setValue] = useState(0)
-  const ref = useRef(null), started = useRef(false)
-  useEffect(() => {
-    if (prefersReducedMotion()) { setValue(end); return }
-    const obs = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !started.current) {
-        started.current = true
-        const t0 = performance.now()
-        const tick = (now) => {
-          const t = Math.min(1, (now - t0) / duration)
-          setValue(Math.round(end * (1 - Math.pow(1 - t, 3))))
-          if (t < 1) requestAnimationFrame(tick)
-        }
-        requestAnimationFrame(tick)
-      }
-    }, { threshold: 0.4 })
-    if (ref.current) obs.observe(ref.current)
-    return () => obs.disconnect()
-  }, [end, duration])
-  return <span ref={ref} className="tabular-nums">{value}{suffix}</span>
+function Eyebrow({ children, className = '' }) {
+  return (
+    <p className={`eyebrow flex items-center gap-3 ${className}`}>
+      <span className="inline-block h-px w-6 bg-primary/45" aria-hidden="true" />
+      {children}
+    </p>
+  )
 }
 
-// Accessible form field wrapper
+/* Every section opens the same way: eyebrow, statement, one line of lede.
+   The repetition is the point — it's what makes the page feel authored. */
+function SectionHead({ eyebrow, title, serif, lede, className = '' }) {
+  return (
+    <div className={`col ${className}`}>
+      <Eyebrow className="reveal mb-5 sm:mb-6">{eyebrow}</Eyebrow>
+      <h2 className="reveal h-section text-[28px] sm:text-[34px] lg:text-[42px]">
+        {title}{' '}
+        {serif && <span className="h-statement italic text-primary block sm:inline">{serif}</span>}
+      </h2>
+      {lede && <p className="reveal lede mt-4 text-[14px] max-w-[62ch]">{lede}</p>}
+    </div>
+  )
+}
+
 function Field({ label, id, type = 'text', value, onChange, placeholder, required, rows }) {
-  const cls = 'w-full bg-background border border-divider rounded-xl px-4 py-3 text-sm text-ink placeholder:text-muted/35 font-body focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/15 transition-colors duration-200'
+  const cls = 'w-full bg-background border border-divider rounded-lg px-3.5 py-2.5 text-[13.5px] text-ink placeholder:text-faint font-body focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/15 transition-colors duration-200'
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted">{label}</label>
+      <label htmlFor={id} className="font-mono text-[8.5px] uppercase tracking-[0.2em] text-muted">{label}</label>
       {type === 'textarea'
         ? <textarea id={id} className={cls + ' resize-none'} rows={rows} value={value} onChange={onChange} placeholder={placeholder} required={required} />
         : <input    id={id} type={type}  className={cls}             value={value} onChange={onChange} placeholder={placeholder} required={required} />
@@ -157,30 +201,31 @@ function Field({ label, id, type = 'text', value, onChange, placeholder, require
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Feature card interactive components
+// Capability visuals — unchanged behaviour, retuned to the new palette
 // ─────────────────────────────────────────────────────────────────────────────
 
 function WorkflowShuffler() {
   const STEPS = [
-    { num:'01', label:'TRIGGER', title:'Event fires',      desc:'Webhook, schedule, or form submission kicks off the automation.', border:'border-primary/20', bg:'bg-primary/[0.055]' },
-    { num:'02', label:'PROCESS', title:'AI applies logic', desc:'Model classifies, generates, or routes the data intelligently.',   border:'border-accent/20',  bg:'bg-accent/[0.055]'  },
-    { num:'03', label:'ACTION',  title:'System updates',   desc:'CRM updated, message sent, or document created automatically.',    border:'border-primary-light/15', bg:'bg-surface'    },
+    { num:'01', label:'ENQUIRY', title:'Enquiry arrives',     desc:'A website chat or WhatsApp message comes in — any hour, any day.' },
+    { num:'02', label:'QUALIFY', title:'AI answers & qualifies', desc:'Treatment questions handled, budget and intent established.'   },
+    { num:'03', label:'BOOKED',  title:'Appointment booked',  desc:'Slot confirmed on the calendar and the front desk is notified.'   },
   ]
   const [active, setActive] = useState(0)
   useEffect(() => {
     if (prefersReducedMotion()) return
-    const id = setInterval(() => setActive(v => (v+1)%STEPS.length), 3000)
+    const id = setInterval(() => setActive(v => (v+1)%STEPS.length), 3200)
     return () => clearInterval(id)
   }, [])
   return (
-    <div className="relative h-44">
+    <div className="relative h-[124px]">
       {STEPS.map((step, i) => {
         const offset = (i - active + STEPS.length) % STEPS.length
         return (
-          <div key={step.num} className={`absolute inset-x-0 rounded-2xl border px-4 py-3.5 transition-all duration-700 ease-in-out ${step.border} ${step.bg}`}
-            style={{ top:`${offset*9}px`, zIndex:STEPS.length-offset, transform:`scale(${1-offset*0.04})`, transformOrigin:'top center', opacity:offset===0?1:offset===1?0.55:0.22, filter:offset===0?'none':`blur(${offset*1.5}px)` }}>
-            <p className="font-mono text-[8px] uppercase tracking-[0.2em] text-muted">{step.num} · {step.label}</p>
-            <p className="font-display font-semibold text-ink text-sm mt-1.5">{step.title}</p>
+          <div key={step.num}
+            className="absolute inset-x-0 rounded-xl border border-divider bg-raised px-4 py-3 transition-all duration-700 ease-in-out"
+            style={{ top:`${offset*9}px`, height:'106px', zIndex:STEPS.length-offset, transform:`scale(${1-offset*0.035})`, transformOrigin:'top center', opacity:offset===0?1:offset===1?0.5:0.2, filter:offset===0?'none':`blur(${offset*1.5}px)` }}>
+            <p className="font-mono text-[8px] uppercase tracking-[0.2em] text-primary/85">{step.num} · {step.label}</p>
+            <p className="font-display font-medium text-ink text-sm mt-1.5">{step.title}</p>
             <p className="text-muted text-xs leading-relaxed mt-1">{step.desc}</p>
           </div>
         )
@@ -190,11 +235,11 @@ function WorkflowShuffler() {
 }
 
 function AISignatureAnim() {
-  const STATUSES = ['Processing request…','Intent recognized','Response generated','Delivered ✓']
+  const STATUSES = ['Missed call detected','Sending WhatsApp…','Lead replied','Appointment booked ✓']
   const [statusIdx, setStatusIdx] = useState(0)
   useEffect(() => {
     if (prefersReducedMotion()) return
-    const id = setInterval(() => setStatusIdx(v => (v+1)%STATUSES.length), 2300)
+    const id = setInterval(() => setStatusIdx(v => (v+1)%STATUSES.length), 2400)
     return () => clearInterval(id)
   }, [])
   const PARTICLES = [
@@ -202,48 +247,48 @@ function AISignatureAnim() {
     {left:'52%',delay:'0.3s',dur:'1.95s'},{left:'65%',delay:'1.45s',dur:'2.05s'},{left:'78%',delay:'0.8s',dur:'2.25s'},{left:'90%',delay:'1.75s',dur:'1.75s'},
   ]
   return (
-    <div className="relative h-44 rounded-2xl overflow-hidden select-none" style={{background:'linear-gradient(180deg,#090720 0%,#110A2C 65%,#090720 100%)'}}>
+    <div className="relative h-[124px] rounded-xl overflow-hidden select-none border border-divider"
+      style={{background:'linear-gradient(180deg,#14100D 0%,#1B1611 65%,#14100D 100%)'}}>
       <style>{`
-        @keyframes code-fall{0%{transform:translate(-50%,0);opacity:0}10%{opacity:.85}85%{opacity:.85}100%{transform:translate(-50%,95px);opacity:0}}
-        @keyframes scan-ripple{0%{transform:translateX(-50%) scaleX(.2);opacity:.65}80%{transform:translateX(-50%) scaleX(4.5);opacity:0}100%{transform:translateX(-50%) scaleX(4.5);opacity:0}}
+        @keyframes code-fall{0%{transform:translate(-50%,0);opacity:0}10%{opacity:.8}85%{opacity:.8}100%{transform:translate(-50%,88px);opacity:0}}
+        @keyframes scan-ripple{0%{transform:translateX(-50%) scaleX(.2);opacity:.6}80%{transform:translateX(-50%) scaleX(4.5);opacity:0}100%{transform:translateX(-50%) scaleX(4.5);opacity:0}}
         @keyframes cur-blink{0%,100%{opacity:1}50%{opacity:0}}
       `}</style>
-      <div className="absolute top-3 left-1/4 w-20 h-20 rounded-full bg-primary/15 blur-2xl pointer-events-none" aria-hidden="true" />
-      <div className="absolute top-5 right-1/4 w-14 h-14 rounded-full bg-accent/20 blur-xl pointer-events-none"  aria-hidden="true" />
-      <div className="absolute top-0 inset-x-0 px-3 py-2 flex items-center justify-between border-b border-white/[0.07]">
-        <span className="font-mono text-[8px] uppercase tracking-[0.18em] text-primary/60">API ENDPOINT</span>
-        <span className="font-mono text-[8px] text-muted/60">7 active</span>
+      <div className="absolute top-3 left-1/4 w-20 h-20 rounded-full bg-primary/[0.07] blur-2xl pointer-events-none" aria-hidden="true" />
+      <div className="absolute top-0 inset-x-0 px-3 py-2 flex items-center justify-between border-b border-divider">
+        <span className="font-mono text-[8px] uppercase tracking-[0.18em] text-primary/70">Follow-up engine</span>
+        <span className="font-mono text-[8px] text-faint">12 in queue</span>
       </div>
-      <div className="absolute inset-x-3" style={{top:'30px'}}>
+      <div className="absolute inset-x-3" style={{top:'28px'}}>
         <svg viewBox="0 0 200 14" className="w-full" fill="none" aria-hidden="true">
-          <rect x="0" y="2" width="200" height="10" rx="2" fill="rgba(0,194,255,0.055)" stroke="rgba(0,194,255,0.18)" strokeWidth="0.5"/>
-          {[18,46,74,102,130,158].map((x,i)=><rect key={i} x={x} y="4.5" width="12" height="5" rx="1" fill="rgba(0,194,255,0.12)"/>)}
-          {[8,32,58,86,116,144,174].map((x,i)=><circle key={i} cx={x} cy="7" r="1.5" fill={i%2===0?'#00C2FF':'#7B61FF'} opacity="0.65"/>)}
+          <rect x="0" y="2" width="200" height="10" rx="2" fill="rgba(196,116,76,0.07)" stroke="rgba(196,116,76,0.26)" strokeWidth="0.5"/>
+          {[18,46,74,102,130,158].map((x,i)=><rect key={i} x={x} y="4.5" width="12" height="5" rx="1" fill="rgba(196,116,76,0.18)"/>)}
+          {[8,32,58,86,116,144,174].map((x,i)=><circle key={i} cx={x} cy="7" r="1.5" fill="#C4744C" opacity={i%2===0?'0.7':'0.35'}/>)}
         </svg>
       </div>
       {PARTICLES.map((p,i)=>(
-        <div key={i} className="absolute font-mono text-primary/80 pointer-events-none" aria-hidden="true"
-          style={{left:p.left,top:'22px',fontSize:'9px',animation:`code-fall ${p.dur} ${p.delay} linear infinite`}}>{'</>'}</div>
+        <div key={i} className="absolute font-mono text-primary/60 pointer-events-none" aria-hidden="true"
+          style={{left:p.left,top:'20px',fontSize:'9px',animation:`code-fall ${p.dur} ${p.delay} linear infinite`}}>{'</>'}</div>
       ))}
-      <div className="absolute inset-x-3 flex items-center gap-1.5" style={{bottom:'32px'}}>
-        <div className="h-px flex-1 bg-gradient-to-r from-primary/25 via-primary/12 to-transparent"/>
+      <div className="absolute inset-x-3 flex items-center gap-1.5" style={{bottom:'30px'}}>
+        <div className="h-px flex-1 bg-gradient-to-r from-primary/35 via-primary/15 to-transparent"/>
         <span className="font-mono text-primary/40" style={{fontSize:'9px',animation:'cur-blink 1s step-end infinite'}} aria-hidden="true">_</span>
       </div>
       {[0,1,2].map(i=>(
-        <div key={i} className="absolute h-px w-10 bg-primary/22 rounded-full pointer-events-none" aria-hidden="true"
-          style={{bottom:'32px',left:'18%',animation:`scan-ripple 2.2s ${i*0.73}s ease-out infinite`}}/>
+        <div key={i} className="absolute h-px w-10 bg-primary/30 rounded-full pointer-events-none" aria-hidden="true"
+          style={{bottom:'30px',left:'18%',animation:`scan-ripple 2.2s ${i*0.73}s ease-out infinite`}}/>
       ))}
-      <div className="absolute bottom-0 inset-x-0 px-3 py-2 flex items-center gap-2 border-t border-white/[0.07]">
+      <div className="absolute bottom-0 inset-x-0 px-3 py-2 flex items-center gap-2 border-t border-divider">
         <div className="h-1.5 w-1.5 rounded-full bg-primary ring-pulse shrink-0"/>
-        <span className="font-mono text-[8px] text-primary/65 transition-all duration-500">{STATUSES[statusIdx]}</span>
-        <span className="font-mono text-[8px] text-muted/45 ml-auto">LIVE</span>
+        <span className="font-mono text-[8px] text-primary/85 transition-all duration-500">{STATUSES[statusIdx]}</span>
+        <span className="font-mono text-[8px] text-faint ml-auto">LIVE</span>
       </div>
     </div>
   )
 }
 
 function AutomationScheduler() {
-  const TASKS = [{id:0,label:'Extract source data'},{id:1,label:'AI classifies records'},{id:2,label:'Update CRM entries'},{id:3,label:'Dispatch notifications'}]
+  const TASKS = [{id:0,label:'Send appointment reminder'},{id:1,label:'Follow up after treatment'},{id:2,label:'Request a review'},{id:3,label:'Send rebooking reminder'}]
   const [cursorStep,setCursorStep]=useState(0),[checked,setChecked]=useState(new Set()),[clicking,setClicking]=useState(false)
   useEffect(() => {
     if (prefersReducedMotion()) return
@@ -271,78 +316,117 @@ function AutomationScheduler() {
     const start=setTimeout(advance,700); timers.push(start)
     return ()=>{ cancelled=true; timers.forEach(clearTimeout) }
   },[])
-  const ROW_H=33, cursorTop=36+cursorStep*ROW_H
+  // Row pitch is sized so all four tasks clear the 124px frame.
+  const ROW_H=22, cursorTop=30+cursorStep*ROW_H
   return (
-    <div className="relative h-44 rounded-2xl overflow-hidden bg-surface border border-divider">
+    <div className="relative h-[124px] rounded-xl overflow-hidden bg-raised border border-divider">
       <div className="px-4 py-2 border-b border-divider flex items-center gap-2">
         <div className="h-1.5 w-1.5 rounded-full bg-primary ring-pulse shrink-0"/>
-        <span className="font-mono text-[8px] uppercase tracking-[0.18em] text-muted">AUTOMATION RUNNING</span>
-        <span className="font-mono text-[8px] text-muted/55 ml-auto">live</span>
+        <span className="font-mono text-[8px] uppercase tracking-[0.18em] text-muted">Retention sequence</span>
+        <span className="font-mono text-[8px] text-faint ml-auto">live</span>
       </div>
       <div className="px-4 pt-1">
         {TASKS.map(task=>(
           <div key={task.id} className="flex items-center gap-3" style={{height:ROW_H}}>
             <div className={`h-3.5 w-3.5 rounded border flex items-center justify-center shrink-0 transition-all duration-300 ${checked.has(task.id)?'bg-primary border-primary':'border-divider'}`}>
-              {checked.has(task.id)&&<svg className="h-2 w-2" fill="none" viewBox="0 0 24 24" stroke="#07070C" strokeWidth={3.5} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>}
+              {checked.has(task.id)&&<svg className="h-2 w-2" fill="none" viewBox="0 0 24 24" stroke="#17120F" strokeWidth={3.5} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>}
             </div>
-            <span className={`font-mono text-[10px] transition-all duration-300 ${checked.has(task.id)?'text-muted/40 line-through':'text-ink/70'}`}>{task.label}</span>
+            <span className={`font-mono text-[10px] transition-all duration-300 ${checked.has(task.id)?'text-faint line-through':'text-ink-2'}`}>{task.label}</span>
           </div>
         ))}
       </div>
       <div className="absolute right-5 transition-all duration-[500ms] ease-out pointer-events-none" style={{top:cursorTop}} aria-hidden="true">
         <svg width="13" height="16" viewBox="0 0 13 16" fill="none" className={`transition-transform duration-100 ${clicking?'scale-75':'scale-100'}`}>
-          <path d="M1 1.5L11.5 8L6.5 9.5L4.5 15L1 1.5Z" fill="#00C2FF" stroke="#00C2FF" strokeWidth="0.8" strokeLinejoin="round"/>
+          <path d="M1 1.5L11.5 8L6.5 9.5L4.5 15L1 1.5Z" fill="#DB9068" stroke="#DB9068" strokeWidth="0.8" strokeLinejoin="round"/>
         </svg>
       </div>
     </div>
   )
 }
 
+const CAP_VISUALS = [WorkflowShuffler, AISignatureAnim, AutomationScheduler]
+
 // ─────────────────────────────────────────────────────────────────────────────
-// Navbar
+// Navigation
 // ─────────────────────────────────────────────────────────────────────────────
 
 function Navbar() {
-  const [scrolled,setScrolled]=useState(false),[open,setOpen]=useState(false)
-  useEffect(()=>{ const f=()=>setScrolled(window.scrollY>80); window.addEventListener('scroll',f,{passive:true}); return()=>window.removeEventListener('scroll',f) },[])
-  useEffect(()=>{ document.body.style.overflow=open?'hidden':''; return()=>{ document.body.style.overflow='' } },[open])
-  const close=()=>setOpen(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
+  useEffect(() => {
+    const f = () => setScrolled(window.scrollY > 24)
+    window.addEventListener('scroll', f, { passive: true })
+    return () => window.removeEventListener('scroll', f)
+  }, [])
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [open])
+  const close = () => setOpen(false)
+
   return (
     <>
-      <nav className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl rounded-full px-4 sm:px-6 py-2.5 flex items-center justify-between transition-all duration-500 ${scrolled?'glass':''}`}>
-        <a href="#home" className="flex items-center gap-2.5 lift-on-hover" aria-label="Home">
-          <img src="/logo-icon.png" alt="" className="h-8 w-8 rounded-xl object-contain bg-black p-0.5 shrink-0" aria-hidden="true" />
-          <span className="font-display font-bold text-sm text-ink tracking-tight">Alfarid B</span>
-        </a>
-        <div className="hidden lg:flex items-center gap-1">
-          {NAV_LINKS.map(({label,href})=>(
-            <a key={label} href={href} className="lift-on-hover px-4 py-2 text-sm font-medium text-muted hover:text-ink transition-colors duration-200 rounded-full hover:bg-white/5">{label}</a>
-          ))}
+      {/* Full-width hairline bar — no floating pill, no border until you scroll */}
+      <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? 'glass' : 'bg-transparent'}`}>
+        <div className="shell flex items-center justify-between h-[68px]">
+          <a href="#home" className="flex items-center gap-2.5 group" aria-label="Home">
+            <img src="/logo-icon.png" alt="" className="h-7 w-7 rounded-lg object-contain bg-black shrink-0" aria-hidden="true" />
+            <span className="font-display font-medium text-[14px] text-ink tracking-tight">Alfarid Bulbula</span>
+          </a>
+
+          {/* Over the hero the nav goes editorial — uppercase, tracked, no
+              chrome. It only returns to the compact UI style once you scroll
+              past the photograph. */}
+          <nav className="hidden lg:flex items-center gap-8" aria-label="Main">
+            {NAV_LINKS.map(({ label, href }) => (
+              <a key={label} href={href}
+                className={`relative transition-all duration-500 py-1 hover:text-ink
+                            after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-0 after:bg-primary
+                            after:transition-all after:duration-300 hover:after:w-full
+                            ${scrolled
+                              ? 'text-[13.5px] text-muted tracking-normal uppercase-none'
+                              : 'text-[11px] uppercase text-ink-2/80 tracking-[0.2em]'}`}>
+                {label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <a href="#contact"
+               className={`hidden lg:inline-flex items-center gap-2 transition-all duration-500 ${
+                 scrolled
+                   ? 'btn btn-solid !py-2.5 !px-5'
+                   : 'text-[11px] uppercase tracking-[0.2em] text-ink-2/80 hover:text-ink font-display'}`}>
+              {scrolled ? "Let's talk" : 'Book a call'}
+              <ArrowUpRight className="h-3.5 w-3.5"/>
+            </a>
+            <button onClick={() => setOpen(v => !v)}
+              className="lg:hidden p-2 -mr-2 text-ink" aria-label={open ? 'Close menu' : 'Open menu'} aria-expanded={open}>
+              {open ? <X className="h-5 w-5"/> : <Menu className="h-5 w-5"/>}
+            </button>
+          </div>
         </div>
-        <a href="#contact" className="magnetic-btn hidden lg:inline-flex items-center gap-1.5 bg-primary text-deep px-5 py-2.5 rounded-full text-sm font-semibold shadow-lg shadow-primary/20">
-          Let&apos;s talk <ArrowUpRight className="h-3.5 w-3.5"/>
-        </a>
-        <button onClick={()=>setOpen(v=>!v)} className="lg:hidden p-2 rounded-full hover:bg-white/5 transition-colors text-ink" aria-label={open?'Close menu':'Open menu'} aria-expanded={open}>
-          {open?<X className="h-5 w-5"/>:<Menu className="h-5 w-5"/>}
-        </button>
-      </nav>
-      <div className={`lg:hidden fixed inset-x-0 top-0 z-40 bg-deep/96 backdrop-blur-2xl rounded-b-[40px] transition-transform duration-500 ease-in-out ${open?'translate-y-0':'-translate-y-full'}`}>
-        <div className="flex flex-col min-h-[65vh] px-6 pt-24 pb-10">
-          <nav className="flex flex-col gap-1">
-            {NAV_LINKS.map(({label,href},i)=>(
-              <a key={label} href={href} onClick={close} className="flex items-center justify-between py-4 border-b border-divider font-display text-2xl font-semibold text-ink hover:text-primary transition-colors duration-200" style={{transitionDelay:open?`${i*40}ms`:'0ms'}}>
-                {label} <ArrowUpRight className="h-5 w-5 text-muted"/>
+      </header>
+
+      {/* Mobile sheet */}
+      <div className={`lg:hidden fixed inset-0 z-40 bg-background transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className="flex flex-col h-full px-6 pt-24 pb-10">
+          <nav className="flex flex-col">
+            {NAV_LINKS.map(({ label, href }, i) => (
+              <a key={label} href={href} onClick={close}
+                className="flex items-center justify-between py-5 border-b border-divider font-display text-[26px] font-medium text-ink"
+                style={{ transitionDelay: open ? `${i * 40}ms` : '0ms' }}>
+                {label} <ArrowUpRight className="h-5 w-5 text-faint"/>
               </a>
             ))}
           </nav>
           <div className="mt-auto pt-8">
-            <a href="#contact" onClick={close} className="magnetic-btn w-full flex items-center justify-center gap-2 bg-primary text-deep py-4 rounded-2xl font-semibold">
+            <a href="#contact" onClick={close} className="btn btn-solid w-full !py-4">
               Let&apos;s talk <ArrowUpRight className="h-4 w-4"/>
             </a>
           </div>
         </div>
       </div>
-      {open&&<div className="lg:hidden fixed inset-0 z-30" onClick={close} aria-hidden="true"/>}
     </>
   )
 }
@@ -351,223 +435,191 @@ function Navbar() {
 // Hero
 // ─────────────────────────────────────────────────────────────────────────────
 
-function Hero() {
-  const ref = useRef(null)
+// Sampled from the lamp light in hero-bg.jpg. Scoped to the hero only — the
+// rest of the site keeps its cyan.
+const HERO_ACCENT = '#D08A5E'
 
+function Hero() {
+  const [lit, setLit] = useState(false)
+  const mediaRef = useRef(null)
+
+  // Mount the entrance on the next frame so the transition actually plays.
   useEffect(() => {
-    if (prefersReducedMotion()) return
-    const ctx = gsap.context(() => {
-      gsap.from('.hero-rise', { y: 26, opacity: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out', delay: 0.1 })
-      gsap.from('.hero-graph', { opacity: 0, duration: 1.6, ease: 'power2.out', delay: 0.2 })
-    }, ref)
-    return () => ctx.revert()
+    const t = requestAnimationFrame(() => setLit(true))
+    return () => cancelAnimationFrame(t)
+  }, [])
+
+  // Parallax — the photograph falls slower than the page. rAF-throttled and
+  // skipped entirely for reduced-motion and for touch, where it costs more
+  // than it gives.
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const coarse = window.matchMedia('(pointer: coarse)').matches
+    if (reduce || coarse) return
+
+    let frame = 0
+    const onScroll = () => {
+      if (frame) return
+      frame = requestAnimationFrame(() => {
+        frame = 0
+        const el = mediaRef.current
+        if (!el) return
+        const y = Math.min(window.scrollY, window.innerHeight)
+        el.style.transform = `translate3d(0, ${y * 0.18}px, 0)`
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
   }, [])
 
   return (
-    <section id="home" ref={ref} className="relative min-h-[100dvh] overflow-hidden flex items-center bg-background">
+    <section id="home" className="relative h-[100svh] min-h-[620px] w-full overflow-hidden bg-deep">
 
-      {/* Ambient brand glows — same palette used across the site */}
-      <div className="absolute pointer-events-none" aria-hidden="true"
-        style={{ top: '6%', left: '8%', width: '44rem', height: '44rem', background: 'radial-gradient(circle, rgba(0,194,255,0.08) 0%, transparent 62%)' }} />
-      <div className="absolute pointer-events-none" aria-hidden="true"
-        style={{ bottom: '0%', left: '0%', width: '36rem', height: '36rem', background: 'radial-gradient(circle, rgba(123,97,255,0.06) 0%, transparent 62%)' }} />
-
-      {/* Shared fine grid — fades out toward the bottom so it bleeds into the next section */}
-      <div className="absolute inset-0 grid-bg pointer-events-none" aria-hidden="true"
-        style={{ WebkitMaskImage: 'linear-gradient(to bottom, #000 0%, #000 50%, transparent 88%)', maskImage: 'linear-gradient(to bottom, #000 0%, #000 50%, transparent 88%)' }} />
-
-      {/* Atmospheric liquid-particle video — layered for a progressive left→right melt.
-          Outer mask handles the vertical fade so top/bottom edges dissolve into the page. */}
-      <div className="hero-graph absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{ WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, #000 14%, #000 82%, transparent 100%)', maskImage: 'linear-gradient(to bottom, transparent 0%, #000 14%, #000 82%, transparent 100%)' }}>
-
-        {/* Crisp detail layer — vibrant, sharp motion on the LEFT, fades out by center */}
-        <video
-          className="absolute inset-0 w-full h-full object-cover opacity-[0.18] lg:opacity-[0.52]"
-          style={{ objectPosition: '20% 50%', filter: 'saturate(1.12) contrast(1.08)',
-            WebkitMaskImage: 'linear-gradient(to right, #000 0%, #000 30%, rgba(0,0,0,0.45) 48%, transparent 66%)',
-            maskImage: 'linear-gradient(to right, #000 0%, #000 30%, rgba(0,0,0,0.45) 48%, transparent 66%)' }}
-          src="/video/hero-liquid.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
-
-        {/* Diffused glow layer — heavily blurred atmosphere that melts behind the headline */}
-        <video
-          className="absolute inset-0 w-full h-full object-cover scale-110 opacity-[0.24] hidden lg:block"
-          style={{ objectPosition: '58% 50%', filter: 'blur(46px) saturate(1.25)',
-            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 26%, #000 52%, rgba(0,0,0,0.5) 80%, transparent 100%)',
-            maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 26%, #000 52%, rgba(0,0,0,0.5) 80%, transparent 100%)' }}
-          src="/video/hero-liquid.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
+      {/* ── The plate ───────────────────────────────────────────────────
+          Full-bleed and uncropped on desktop. On a portrait phone a 16:9
+          frame can only ever show a slice, so the framing shifts to the
+          notebook and the workflow nodes — the parts worth keeping. */}
+      <div ref={mediaRef} className="absolute inset-0 will-change-transform" aria-hidden="true">
+        <div className={`absolute -inset-[2%] hero-media ${lit ? 'in' : ''}`}>
+          <img
+            src="/hero-bg.jpg"
+            alt=""
+            className="hero-drift h-full w-full object-cover object-[57%_46%] sm:object-center"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </div>
       </div>
 
-      {/* Readability scrim — keeps the headline on near-black while letting a faint glow survive behind it */}
-      <div className="absolute inset-0 pointer-events-none hidden lg:block" aria-hidden="true"
-        style={{ background: 'linear-gradient(to right, transparent 0%, transparent 32%, rgba(10,10,15,0.32) 54%, rgba(10,10,15,0.7) 82%, rgba(10,10,15,0.84) 100%)' }} />
+      {/* ── Grade ───────────────────────────────────────────────────────
+          The plate is already dark and already lit, so this is restraint,
+          not correction: a bottom fall-off and a lower-left pool to seat
+          the type, plus a whisper at the top for the nav. Nothing that
+          flattens the lamp or buries the desk. */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
+        style={{ background: 'linear-gradient(180deg, rgba(23,19,16,0.55) 0%, rgba(23,19,16,0.12) 14%, rgba(23,19,16,0) 26%)' }}/>
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
+        style={{ background: 'radial-gradient(ellipse 78% 68% at 22% 88%, rgba(23,19,16,0.88) 0%, rgba(23,19,16,0.45) 45%, rgba(23,19,16,0) 72%)' }}/>
+      <div className="absolute inset-x-0 bottom-0 h-[46%] pointer-events-none" aria-hidden="true"
+        style={{ background: 'linear-gradient(180deg, rgba(23,19,16,0) 0%, rgba(23,19,16,0.35) 38%, rgba(23,18,15,0.82) 68%, rgba(23,18,15,0.97) 88%, #17120F 100%)' }}/>
+      {/* A phone crops out most of the dark floor, so the type needs its own
+          ground. Desktop never sees this. */}
+      <div className="absolute inset-x-0 bottom-0 h-[58%] pointer-events-none sm:hidden" aria-hidden="true"
+        style={{ background: 'linear-gradient(180deg, rgba(23,19,16,0) 0%, rgba(23,19,16,0.55) 42%, rgba(23,18,15,0.92) 72%, #17120F 100%)' }}/>
 
-      {/* Seamless fade into the next section */}
-      <div className="absolute inset-x-0 bottom-0 h-64 pointer-events-none" aria-hidden="true"
-        style={{ background: 'linear-gradient(to bottom, transparent 0%, #0A0A0F 92%)' }} />
+      {/* ── Type ────────────────────────────────────────────────────────
+          Lower-left, sitting straight on the photograph — no card, no panel.
+          The accent is sampled from the plate's own lamp rather than the
+          site's cyan, which would fight the warm light. */}
+      <div className="relative z-10 h-full flex items-end">
+        {/* Sits low on purpose: the plate's desk edge runs across the middle,
+            and the type belongs in the dark floor beneath it, not on top of
+            the notebook. */}
+        <div className="shell w-full pb-[11vh] sm:pb-[6vh] lg:pb-[7vh]">
 
-      {/* Content — right half on desktop, left-aligned on mobile */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-28 lg:py-0 min-h-[100dvh] flex items-center">
-        <div className="lg:ml-auto lg:w-[50%] flex flex-col gap-6">
-
-          <p className="hero-rise font-mono text-[10px] sm:text-xs uppercase tracking-[.28em] text-primary/65 flex items-center gap-3">
-            <span className="inline-block h-px w-8 bg-primary/35" aria-hidden="true" />
-            AI Automation Builder
+          <p className={`hero-rise ${lit ? 'in' : ''} font-display text-[10px] sm:text-[11.5px] uppercase`}
+             style={{ letterSpacing: '0.32em', color: HERO_ACCENT, transitionDelay: '400ms' }}>
+            Alfarid Worakie <span className="opacity-60 mx-1.5">·</span> Abu Dhabi
           </p>
 
-          <h1 className="hero-rise">
-            <span className="block font-display text-5xl sm:text-6xl lg:text-[76px] font-bold text-ink tracking-tighter leading-[.93]">
-              Stop doing repetitive work.
-            </span>
-            <span className="block font-serif italic text-5xl sm:text-6xl lg:text-[76px] font-medium tracking-tighter leading-[1.05] gradient-text mt-1 sm:mt-2">
-              Let AI handle it.
-            </span>
+          <h1 className={`hero-rise ${lit ? 'in' : ''} font-serif font-normal text-ink mt-4 sm:mt-6
+                          text-[46px] sm:text-[80px] lg:text-[108px] xl:text-[124px]`}
+              style={{ letterSpacing: '-0.03em', lineHeight: 0.94, transitionDelay: '540ms',
+                       textShadow: '0 2px 44px rgba(23,19,16,0.65)' }}>
+            Rawna Automation<span style={{ color: HERO_ACCENT }}>.</span>
           </h1>
 
-          <p className="hero-rise max-w-md text-muted text-base sm:text-lg leading-relaxed">
-            I build AI agents, automations, and voice AI systems that eliminate repetitive work so your team can focus on customers, growth, and high-value decisions.
+          <p className={`hero-rise ${lit ? 'in' : ''} mt-5 sm:mt-7 text-[14.5px] sm:text-[16px]
+                         leading-relaxed text-ink-2/90 max-w-[30ch] sm:max-w-[46ch]`}
+             style={{ transitionDelay: '680ms', textShadow: '0 1px 24px rgba(23,19,16,0.85)' }}>
+            I build AI automation systems and workflows for businesses — replacing manual
+            work with systems that run themselves.
           </p>
 
-          <div className="hero-rise flex flex-wrap gap-3 mt-2">
-            <a href="#about" className="magnetic-btn inline-flex items-center gap-2 bg-primary text-deep px-7 py-3.5 rounded-full font-semibold text-sm shadow-xl shadow-primary/20">
-              About me <ArrowDown className="h-4 w-4" />
-            </a>
-            <a href="#work" className="magnetic-btn inline-flex items-center gap-2 glass-dark text-ink px-7 py-3.5 rounded-full font-semibold text-sm">
-              See my work
-            </a>
-          </div>
+          {/* A rule that draws itself on hover. No pill, no fill. */}
+          <a href="#contact"
+             className={`hero-rise ${lit ? 'in' : ''} hero-cta group mt-8 sm:mt-10 inline-flex items-center gap-3
+                         font-display text-[11px] sm:text-[12px] uppercase text-ink`}
+             style={{ letterSpacing: '0.24em', transitionDelay: '820ms' }}>
+            Let&apos;s talk
+            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5"/>
+          </a>
 
         </div>
       </div>
 
-      {/* Bottom status bar — hairline fades at both ends, no hard separating border */}
-      <div className="absolute bottom-0 inset-x-0 z-10">
-        <div className="h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" aria-hidden="true" />
-        <div className="flex items-center justify-between px-6 sm:px-10 lg:px-16 py-4">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 ring-pulse-green" />
-            <span className="font-mono text-[10px] uppercase tracking-widest text-muted">Available for projects</span>
-          </div>
-          <span className="font-mono text-[10px] uppercase tracking-widest text-muted hidden sm:block">Alfarid Bulbula · 2026</span>
-        </div>
-      </div>
-
+      {/* ── Scroll cue ──────────────────────────────────────────────────
+          The only other mark on the screen. */}
+      <a href="#services" aria-label="Scroll to content"
+         className={`hero-rise ${lit ? 'in' : ''} absolute z-10 bottom-7 right-6 sm:right-10 hidden sm:flex flex-col items-center gap-2
+                     text-faint hover:text-ink-2 transition-colors duration-300`}
+         style={{ transitionDelay: '900ms' }}>
+        <span className="font-display text-[9.5px] uppercase" style={{ letterSpacing: '0.26em', writingMode: 'vertical-rl' }}>
+          Scroll
+        </span>
+        <ArrowDown className="hero-cue h-3.5 w-3.5" aria-hidden="true"/>
+      </a>
     </section>
   )
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Features section
+// Capabilities
 // ─────────────────────────────────────────────────────────────────────────────
 
 function Features() {
-  const sectionRef=useRef(null)
-  useEffect(()=>{
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return
-    const ctx=gsap.context(()=>{
-      gsap.from('.feature-card',{scrollTrigger:{trigger:sectionRef.current,start:'top 78%',once:true},y:40,opacity:0,duration:.8,stagger:.16,ease:'power3.out'})
-    },sectionRef)
-    return()=>ctx.revert()
-  },[])
   return (
-    <section id="services" ref={sectionRef} className="py-24 sm:py-32 lg:py-40">
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-        <div className="max-w-2xl mb-16 sm:mb-20">
-          <p className="font-mono text-[10px] uppercase tracking-[.25em] text-primary/60 mb-5 flex items-center gap-3">
-            <span className="inline-block h-px w-6 bg-primary/30" aria-hidden="true"/> WHAT I BUILD
-          </p>
-          <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold text-ink tracking-tighter leading-[1.02] text-balance">
-            Systems that run
-            <span className="block font-serif italic font-medium gradient-text mt-1">while you sleep.</span>
-          </h2>
-          <p className="text-muted text-base leading-relaxed mt-5 max-w-lg">
-            Three capability areas — each built to eliminate manual work so your team can focus on decisions that actually require humans.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="feature-card flex flex-col gap-5">
-            <div>
-              <p className="font-mono text-[9px] uppercase tracking-[.2em] text-muted mb-2">CAPABILITY · 01</p>
-              <h3 className="font-display text-xl font-bold text-ink">AI Agents &amp; Workflows</h3>
-            </div>
-            <WorkflowShuffler/>
-            <div>
-              <p className="text-muted text-sm leading-relaxed">End-to-end automations that trigger on events, apply intelligence, and take action — no human required.</p>
-              <ul className="mt-3 space-y-1.5">
-                {['n8n, Make, Zapier','OpenAI & Claude APIs','Custom webhook integrations'].map(t=>(
-                  <li key={t} className="flex items-center gap-2 text-xs text-muted"><span className="h-1 w-1 rounded-full bg-primary shrink-0" aria-hidden="true"/>{t}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="feature-card flex flex-col gap-5">
-            <div>
-              <p className="font-mono text-[9px] uppercase tracking-[.2em] text-muted mb-2">CAPABILITY · 02</p>
-              <h3 className="font-display text-xl font-bold text-ink">Voice AI Systems</h3>
-            </div>
-            <AISignatureAnim/>
-            <div>
-              <p className="text-muted text-sm leading-relaxed">AI voice agents and conversational systems that handle inbound calls, qualify leads, and respond 24/7.</p>
-              <ul className="mt-3 space-y-1.5">
-                {['Twilio, VAPI, ElevenLabs','LLM intent recognition','CRM handoff & logging'].map(t=>(
-                  <li key={t} className="flex items-center gap-2 text-xs text-muted"><span className="h-1 w-1 rounded-full bg-accent shrink-0" aria-hidden="true"/>{t}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="feature-card flex flex-col gap-5">
-            <div>
-              <p className="font-mono text-[9px] uppercase tracking-[.2em] text-muted mb-2">CAPABILITY · 03</p>
-              <h3 className="font-display text-xl font-bold text-ink">Business Automations</h3>
-            </div>
-            <AutomationScheduler/>
-            <div>
-              <p className="text-muted text-sm leading-relaxed">Internal tools and cross-platform syncs that cut repetitive work — data entry, reporting, multi-step pipelines.</p>
-              <ul className="mt-3 space-y-1.5">
-                {['Airtable, Notion, Sheets','API-to-API connectors','Automated reporting pipelines'].map(t=>(
-                  <li key={t} className="flex items-center gap-2 text-xs text-muted"><span className="h-1 w-1 rounded-full bg-primary-light shrink-0" aria-hidden="true"/>{t}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
+    <section id="services" className="scroll-mt-24 py-12 sm:py-14 lg:py-16">
+      <div className="shell">
+        <SectionHead
+          eyebrow="What we do"
+          title="We build AI systems that turn med spa enquiries into"
+          serif="booked appointments."
+          lede="We take the repetitive work off your front desk — answering questions, following up with leads, recovering missed calls, and keeping your calendar full. Built around your clinic, your treatments, and the way your team already works."
+        />
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Pillars
-// ─────────────────────────────────────────────────────────────────────────────
+        {/* Three panels, side by side on desktop and stacked on a phone.
+            Each one runs label → title → live visual → copy → list, and the
+            visual block is a fixed height so the three descriptions line up
+            across the row however long the titles run. */}
+        <div className="mt-10 sm:mt-12 grid gap-5 lg:gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {CAPABILITIES.map((cap, i) => {
+            const Visual = CAP_VISUALS[i]
+            return (
+              <div key={cap.n}
+                   className="reveal panel panel-hover flex flex-col p-5 rounded-2xl">
+                <p className="font-mono text-[9.5px] uppercase text-muted/80" style={{ letterSpacing: '0.22em' }}>
+                  Capability · {cap.n}
+                </p>
 
-function Pillars() {
-  return (
-    <section className="relative py-20 sm:py-28 overflow-hidden border-y border-divider" style={{background:'rgba(7,7,12,.55)'}}>
-      <div className="absolute top-1/2 left-1/4  -translate-y-1/2 w-80 h-80 rounded-full bg-primary/[.05] blur-[100px] pointer-events-none" aria-hidden="true"/>
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 rounded-full bg-accent/[.04]  blur-[90px]  pointer-events-none" aria-hidden="true"/>
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-divider">
-          {PILLARS.map(p=>(
-            <div key={p.eyebrow} className="px-0 sm:px-10 lg:px-14 py-10 sm:py-0 first:sm:pl-0 last:sm:pr-0">
-              <p className="font-mono text-[9px] uppercase tracking-[.22em] text-muted mb-4">{p.eyebrow}</p>
-              <div className="font-display text-6xl sm:text-7xl font-bold gradient-text leading-none"><CountUp end={p.end} suffix={p.suffix}/></div>
-              <p className="text-muted text-sm leading-relaxed mt-3 max-w-[200px]">{p.desc}</p>
-              <div className="mt-6 h-px w-20 relative overflow-hidden rounded-full">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary to-transparent" style={{animation:'pillar-sweep 3s ease-in-out infinite'}} aria-hidden="true"/>
+                {/* Reserved for two lines once the cards sit side by side, so
+                    a title that wraps doesn't shove its visual out of line
+                    with the other two. */}
+                <h3 className="font-display text-[16px] sm:text-[17px] font-semibold text-ink tracking-tight mt-2.5
+                               lg:min-h-[46px]">
+                  {cap.title}
+                </h3>
+
+                <div className="mt-4">
+                  <Visual/>
+                </div>
+
+                <p className="lede mt-3.5 text-[13px]">{cap.desc}</p>
+
+                <ul className="mt-4 space-y-2">
+                  {cap.tools.map(t => (
+                    <li key={t} className="flex items-start gap-2.5 text-[12.5px] text-ink-2/85">
+                      <span className="h-1 w-1 rounded-full bg-primary shrink-0 mt-[6px]" aria-hidden="true"/>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
@@ -575,107 +627,80 @@ function Pillars() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Projects (3D carousel + case-study modal)
+// Work
 // ─────────────────────────────────────────────────────────────────────────────
 
-function ProjectImage({ accent, image, alt }) {
-  const p = accent === 'primary'
+function ProjectImage({ image, alt, ratio = '16/9' }) {
+  // A file that 404s falls back to the same placeholder as no file at all,
+  // rather than leaving a broken-image icon in the layout.
+  const [failed, setFailed] = useState(false)
 
-  if (image) {
+  if (!image || failed) {
     return (
-      <div className="relative w-full rounded-2xl overflow-hidden border border-divider bg-deep group" style={{ aspectRatio: '16/9' }}>
-        <img
-          src={image}
-          alt={alt}
-          className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-          loading="lazy"
-        />
-        {/* Bottom gradient blends the screenshot into the card */}
-        <div
-          className="absolute bottom-0 inset-x-0 h-20 pointer-events-none"
-          style={{ background: 'linear-gradient(to top, rgba(19,19,26,0.65) 0%, transparent 100%)' }}
-          aria-hidden="true"
-        />
-        {/* Accent tint on the top edge */}
-        <div
-          className="absolute top-0 inset-x-0 h-px pointer-events-none"
-          style={{ background: p ? 'rgba(0,194,255,0.2)' : 'rgba(123,97,255,0.2)' }}
-          aria-hidden="true"
-        />
+      <div className="w-full rounded-xl border border-divider bg-raised flex items-center justify-center"
+        style={{ aspectRatio: ratio }}>
+        <p className="font-mono text-[8px] uppercase tracking-[0.22em] text-faint">Add screenshot</p>
       </div>
     )
   }
-
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden bg-deep border border-divider" style={{ aspectRatio: '4/3' }}>
-      <div className="absolute inset-0" aria-hidden="true"
-        style={{ backgroundImage: `linear-gradient(${p?'rgba(0,194,255,.04)':'rgba(123,97,255,.04)'} 1px,transparent 1px),linear-gradient(90deg,${p?'rgba(0,194,255,.04)':'rgba(123,97,255,.04)'} 1px,transparent 1px)`, backgroundSize: '28px 28px' }}/>
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
-        style={{ background: p ? 'radial-gradient(ellipse 70% 60% at 50% 40%,rgba(0,194,255,.05) 0%,transparent 70%)' : 'radial-gradient(ellipse 70% 60% at 50% 40%,rgba(123,97,255,.06) 0%,transparent 70%)' }}/>
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-        <div className="h-10 w-10 rounded-xl border flex items-center justify-center"
-          style={{ borderColor: p?'rgba(0,194,255,.2)':'rgba(123,97,255,.2)', background: p?'rgba(0,194,255,.07)':'rgba(123,97,255,.07)' }}>
-          <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke={p?'#00C2FF':'#7B61FF'} strokeWidth="1.5" strokeOpacity=".5" aria-hidden="true">
-            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
-          </svg>
-        </div>
-        <p className="font-mono text-[8px] uppercase tracking-[.22em] text-muted/40">Add screenshot</p>
-      </div>
+    <div className="relative w-full rounded-xl overflow-hidden border border-divider bg-deep"
+      style={{ aspectRatio: ratio }}>
+      <img src={image} alt={alt} loading="lazy" onError={() => setFailed(true)}
+        className="w-full h-full object-cover object-top transition-transform duration-[900ms] ease-out group-hover:scale-[1.03]"/>
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background:'linear-gradient(to top, rgba(16,12,10,0.55) 0%, transparent 45%)' }} aria-hidden="true"/>
     </div>
   )
 }
 
-// Single carousel card — title, one-line description, screenshot, tags, CTA
-function ProjectCard({ project, active, onOpen }) {
-  const p = project.accent === 'primary'
-  const extra = project.tools.length - 4
+/* Case studies read as an index, not a carousel: all of them visible, scannable,
+   each opening the same full case-study modal as before. */
+/* One slide. The active one is fully lit and interactive; the neighbours sit
+   back — scaled down, dimmed and softly blurred — and clicking one brings it
+   to the centre rather than opening it. */
+function ProjectCard({ project, index, active, onOpen, onFocus }) {
   return (
-    <div className="relative select-none">
-      {/* Glow behind the active card */}
-      <div
-        className="absolute -inset-4 rounded-[2.25rem] blur-2xl pointer-events-none transition-opacity duration-500"
-        aria-hidden="true"
-        style={{
-          opacity: active ? 1 : 0,
-          background: p
-            ? 'radial-gradient(ellipse 70% 70% at 50% 40%, rgba(0,194,255,0.22), transparent 70%)'
-            : 'radial-gradient(ellipse 70% 70% at 50% 40%, rgba(123,97,255,0.22), transparent 70%)',
-        }}
-      />
-      <div className={`relative rounded-3xl border bg-surface p-5 sm:p-6 transition-colors duration-300 ${active ? 'border-primary/25' : 'border-divider'}`}>
-        <ProjectImage accent={project.accent} image={project.image} alt={project.title} />
-        <div className="mt-5">
-          <p className="font-mono text-[9px] uppercase tracking-[.22em] text-muted mb-2">
-            {String(project.id).padStart(2, '0')} · PROJECT
-          </p>
-          <h3 className="font-display text-lg sm:text-xl font-bold text-ink tracking-tight leading-snug">{project.title}</h3>
-          <p className="text-muted text-sm mt-2 leading-relaxed line-clamp-2">{project.subtitle}</p>
+    <article
+      className={`shrink-0 w-[82vw] sm:w-[56vw] lg:w-[430px] rounded-2xl border p-3.5
+                  transition-all duration-700 ease-out
+                  ${active ? 'border-primary/25 bg-surface' : 'border-divider bg-surface/50 cursor-pointer'}`}
+      style={{
+        transform: `scale(${active ? 1 : 0.9})`,
+        opacity: active ? 1 : 0.4,
+        filter: active ? 'none' : 'blur(2px)',
+        boxShadow: active ? '0 28px 80px -40px rgba(196,116,76,0.28)' : 'none',
+      }}
+      onClick={active ? undefined : onFocus}
+      aria-hidden={!active}
+    >
+      <ProjectImage image={project.image} alt={project.title}/>
 
-          <div className="flex flex-wrap gap-2 mt-4">
-            {project.tools.slice(0, 4).map(tool => (
-              <span key={tool} className="font-mono text-[9px] uppercase tracking-[.1em] text-muted/70 px-2.5 py-1 rounded-full border border-divider bg-background">{tool}</span>
-            ))}
-            {extra > 0 && (
-              <span className="font-mono text-[9px] uppercase tracking-[.1em] text-muted/50 px-2.5 py-1 rounded-full border border-divider bg-background">+{extra}</span>
-            )}
-          </div>
+      <div className="px-1.5 pt-4 pb-0.5">
+        <p className="font-mono text-[9.5px] uppercase text-primary/60" style={{ letterSpacing: '0.22em' }}>
+          {String(index + 1).padStart(2, '0')} · Project
+        </p>
 
-          <button
-            type="button"
-            onClick={onOpen}
-            disabled={!active}
-            tabIndex={active ? 0 : -1}
-            className={`magnetic-btn mt-5 w-full inline-flex items-center justify-center gap-2 bg-primary text-deep py-3 rounded-2xl font-semibold text-sm shadow-lg shadow-primary/20 ${active ? '' : 'pointer-events-none'}`}
-          >
-            View Case Study <ArrowUpRight className="h-4 w-4" />
-          </button>
+        <h3 className="font-display text-[16px] sm:text-[18px] font-semibold text-ink tracking-tight leading-snug mt-2">
+          {project.title}
+        </h3>
+
+        <p className="lede mt-2 text-[12.5px]">{project.subtitle}</p>
+
+        <div className="flex flex-wrap gap-1.5 mt-3.5">
+          {project.tools.slice(0, 4).map(t => <span key={t} className="tag">{t}</span>)}
+          {project.tools.length > 4 && <span className="tag !text-faint">+{project.tools.length - 4}</span>}
         </div>
+
+        <button type="button" onClick={onOpen} tabIndex={active ? 0 : -1}
+          className="btn btn-solid w-full mt-4 !py-3 !text-[12.5px]">
+          View Case Study <ArrowUpRight className="h-3.5 w-3.5"/>
+        </button>
       </div>
-    </div>
+    </article>
   )
 }
 
-// Full case-study modal — Problem / Solution / Result
 function ProjectModal({ project, onClose }) {
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -685,47 +710,39 @@ function ProjectModal({ project, onClose }) {
   }, [onClose])
 
   return (
-    <motion.div
-      className="fixed inset-0 z-[80] flex items-center justify-center p-4 sm:p-6"
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-    >
-      <div className="absolute inset-0 bg-deep/80 backdrop-blur-md" onClick={onClose} aria-hidden="true" />
+    <motion.div className="fixed inset-0 z-[80] flex items-center justify-center p-4 sm:p-6"
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <div className="absolute inset-0 bg-deep/85 backdrop-blur-md" onClick={onClose} aria-hidden="true" />
       <motion.div
         role="dialog" aria-modal="true" aria-label={project.title}
-        className="relative w-full max-w-3xl max-h-[88vh] overflow-y-auto bg-surface rounded-3xl border border-divider shadow-2xl"
-        initial={{ opacity: 0, y: 26, scale: 0.97 }}
+        className="relative w-full max-w-3xl max-h-[88vh] overflow-y-auto bg-surface rounded-2xl border border-divider"
+        initial={{ opacity: 0, y: 22, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 26, scale: 0.97 }}
-        transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+        exit={{ opacity: 0, y: 22, scale: 0.98 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 28 }}
       >
-        <button
-          type="button" onClick={onClose} aria-label="Close case study"
-          className="absolute top-4 right-4 z-10 h-9 w-9 rounded-full glass-dark border border-white/[0.08] flex items-center justify-center text-ink hover:border-primary/30 transition-colors"
-        >
+        <button type="button" onClick={onClose} aria-label="Close case study"
+          className="absolute top-4 right-4 z-10 h-9 w-9 rounded-full glass-dark flex items-center justify-center text-ink hover:border-primary/30 transition-colors">
           <X className="h-4 w-4" />
         </button>
 
-        <div className="p-6 sm:p-8 lg:p-10">
-          <div className="mb-7"><ProjectImage accent={project.accent} image={project.image} alt={project.title} /></div>
-          <p className="font-mono text-[9px] uppercase tracking-[.22em] text-muted mb-3">
-            {String(project.id).padStart(2, '0')} · CASE STUDY
-          </p>
-          <h3 className="font-display text-2xl sm:text-3xl font-bold text-ink tracking-tight leading-tight">{project.title}</h3>
-          <p className="text-muted text-sm mt-2 leading-relaxed">{project.subtitle}</p>
+        <div className="p-6 sm:p-10">
+          <div className="mb-8"><ProjectImage image={project.image} alt={project.title}/></div>
+          <p className="eyebrow mb-4">{String(project.id).padStart(2, '0')} · Case study</p>
+          <h3 className="font-display text-[20px] sm:text-[24px] font-medium text-ink tracking-tight leading-tight">{project.title}</h3>
+          <p className="lede text-[14.5px] mt-3">{project.subtitle}</p>
 
-          <div className="space-y-5 mt-7">
-            {[{ key: 'problem', label: 'PROBLEM' }, { key: 'solution', label: 'SOLUTION' }, { key: 'result', label: 'RESULT' }].map(({ key, label }) => (
-              <div key={key}>
-                <p className="font-mono text-[8px] uppercase tracking-[.22em] text-primary/55 mb-1.5">{label}</p>
-                <p className="text-muted text-sm leading-relaxed">{project[key]}</p>
+          <div className="mt-9">
+            {[{ key:'problem', label:'Problem' }, { key:'solution', label:'Solution' }, { key:'result', label:'Result' }].map(({ key, label }) => (
+              <div key={key} className="border-t border-divider py-6 grid sm:grid-cols-12 gap-3 sm:gap-6">
+                <p className="sm:col-span-3 font-mono text-[9px] uppercase tracking-[0.2em] text-primary/60 pt-1">{label}</p>
+                <p className="sm:col-span-9 text-ink-2 text-[14.5px] leading-relaxed">{project[key]}</p>
               </div>
             ))}
           </div>
 
-          <div className="flex flex-wrap gap-2 mt-7">
-            {project.tools.map(tool => (
-              <span key={tool} className="font-mono text-[9px] uppercase tracking-[.1em] text-muted/70 px-3 py-1.5 rounded-full border border-divider bg-background">{tool}</span>
-            ))}
+          <div className="flex flex-wrap gap-2 mt-8 pt-6 border-t border-divider">
+            {project.tools.map(tool => <span key={tool} className="tag">{tool}</span>)}
           </div>
         </div>
       </motion.div>
@@ -734,112 +751,103 @@ function ProjectModal({ project, onClose }) {
 }
 
 function Projects() {
-  const sectionRef = useRef(null)
-  const [active, setActive] = useState(0)
   const [openId, setOpenId] = useState(null)
-  const [layout, setLayout] = useState({ spacing: 420, rot: 20 })
-  const n = PROJECTS.length
-  const reduce = prefersReducedMotion()
-
-  // Responsive spacing / rotation for the 3D stage
-  useEffect(() => {
-    const compute = () => {
-      const w = window.innerWidth
-      if (w < 640) setLayout({ spacing: Math.min(w * 0.62, 250), rot: 0 })
-      else if (w < 1024) setLayout({ spacing: 360, rot: 16 })
-      else setLayout({ spacing: 440, rot: 22 })
-    }
-    compute()
-    window.addEventListener('resize', compute)
-    return () => window.removeEventListener('resize', compute)
-  }, [])
-
-  // Heading reveal (matches the other sections)
-  useEffect(() => {
-    if (reduce) return
-    const ctx = gsap.context(() => {
-      gsap.from('.projects-heading', { scrollTrigger: { trigger: '.projects-heading', start: 'top 82%', once: true }, y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' })
-    }, sectionRef)
-    return () => ctx.revert()
-  }, [reduce])
-
-  const go = (dir) => setActive(a => (a + dir + n) % n)
+  const [active, setActive] = useState(0)
   const openProject = PROJECTS.find(p => p.id === openId)
 
+  const N = PROJECTS.length
+  const stageRef = useRef(null)
+  const cardRefs = useRef([])
+  const [layout, setLayout] = useState({ card: 0, height: 0 })
+
+  // Cards are stacked absolutely so the carousel can wrap, which means the
+  // stage needs an explicit height and each card needs its measured width to
+  // sit a full step to the side. Both are viewport-dependent, so measure.
+  useEffect(() => {
+    const measure = () => {
+      const cards = cardRefs.current.filter(Boolean)
+      if (!cards.length) return
+      setLayout({
+        card: cards[0].offsetWidth,
+        height: Math.max(...cards.map(c => c.offsetHeight)),
+      })
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    // Re-measure once webfonts land, since they change how titles wrap.
+    document.fonts?.ready.then(measure).catch(() => {})
+    return () => window.removeEventListener('resize', measure)
+  }, [])
+
+  const go = (dir) => setActive(v => (v + dir + N) % N)
+
+  // Signed distance from the active card, wrapped so the ends meet: with three
+  // projects every card is always -1, 0 or +1 away.
+  const distanceFrom = (i) => {
+    let d = (((i - active) % N) + N) % N
+    if (d > N / 2) d -= N
+    return d
+  }
+
+  const GAP = 26
+
   return (
-    <section id="work" ref={sectionRef} className="py-24 sm:py-32 lg:py-40 overflow-hidden">
-      <div className="projects-heading max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 mb-14 sm:mb-16">
-        <p className="font-mono text-[10px] uppercase tracking-[.25em] text-primary/60 mb-5 flex items-center gap-3">
-          <span className="inline-block h-px w-6 bg-primary/30" aria-hidden="true"/> MY WORK
-        </p>
-        <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold text-ink tracking-tighter leading-[1.02] text-balance">
-          The work,
-          <span className="block font-serif italic font-medium gradient-text mt-1">in context.</span>
-        </h2>
-        <p className="text-muted text-base leading-relaxed mt-5 max-w-lg">
-          Four projects — swipe through, then open any one for the full problem, solution, and result.
-        </p>
+    <section id="work" className="scroll-mt-24 py-12 sm:py-14 lg:py-16">
+      <div className="shell">
+        <SectionHead
+          eyebrow="Selected work"
+          title="The work,"
+          serif="in context."
+          lede="Three systems built end to end. Open any one for the full problem, solution, and result."
+        />
       </div>
 
-      {/* 3D carousel stage */}
-      <div className="relative" style={{ perspective: 1800 }}>
-        <motion.div
-          className="relative h-[540px] sm:h-[560px] mx-auto max-w-7xl"
-          drag={reduce ? false : 'x'}
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.18}
-          dragSnapToOrigin
-          onDragEnd={(_, info) => {
-            if (info.offset.x < -60) go(1)
-            else if (info.offset.x > 60) go(-1)
-          }}
-        >
-          {PROJECTS.map((project, i) => {
-            let offset = i - active
-            if (offset > n / 2) offset -= n
-            if (offset < -n / 2) offset += n
-            const abs = Math.abs(offset)
-            const isActive = offset === 0
-            const visible = abs <= 1
+      {/* Full-bleed so the neighbouring cards stay visible past the shell. */}
+      <div className="relative mt-10 sm:mt-12">
+        <div ref={stageRef} className="relative overflow-hidden"
+             style={{ height: layout.height ? layout.height + 48 : undefined }}>
+          {PROJECTS.map((p, i) => {
+            const d = distanceFrom(i)
+            const isActive = d === 0
+            const shown = Math.abs(d) <= 1
             return (
-              <motion.div
-                key={project.id}
-                className="absolute top-0 left-0 right-0 mx-auto w-[86vw] max-w-[430px] sm:max-w-[460px]"
-                animate={{
-                  x: offset * layout.spacing,
-                  rotateY: -offset * layout.rot,
-                  scale: isActive ? 1 : 0.82,
-                  opacity: visible ? (isActive ? 1 : 0.42) : 0,
-                  filter: isActive ? 'blur(0px)' : 'blur(2.5px)',
-                }}
-                transition={reduce ? { duration: 0 } : { type: 'spring', stiffness: 240, damping: 30 }}
-                style={{ transformStyle: 'preserve-3d', zIndex: 20 - abs, pointerEvents: visible ? 'auto' : 'none' }}
-                onClick={() => { if (!isActive) setActive(i) }}
-              >
-                <ProjectCard project={project} active={isActive} onOpen={() => setOpenId(project.id)} />
-              </motion.div>
+              <div key={p.id}
+                   ref={el => { cardRefs.current[i] = el }}
+                   className="absolute top-1/2 left-1/2 transition-all duration-700 ease-out"
+                   style={{
+                     transform: `translate(-50%, -50%) translateX(${d * (layout.card + GAP)}px)`,
+                     zIndex: isActive ? 2 : 1,
+                     visibility: shown ? 'visible' : 'hidden',
+                     pointerEvents: shown ? 'auto' : 'none',
+                   }}>
+                <ProjectCard project={p} index={i} active={isActive}
+                  onOpen={() => setOpenId(p.id)} onFocus={() => setActive(i)}/>
+              </div>
             )
           })}
-        </motion.div>
+        </div>
 
-        {/* Nav arrows */}
+        {/* Arrows sit outside the cards. The carousel wraps, so both always show. */}
         <button type="button" onClick={() => go(-1)} aria-label="Previous project"
-          className="absolute left-3 sm:left-8 top-[42%] z-30 h-11 w-11 rounded-full glass-dark border border-white/[0.08] flex items-center justify-center text-ink hover:border-primary/30 transition-colors">
-          <ChevronLeft className="h-5 w-5" />
+          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-10 h-11 w-11 rounded-full
+                     border border-divider bg-background/80 backdrop-blur flex items-center justify-center
+                     text-ink-2 hover:text-ink hover:border-primary/30 transition-colors duration-300">
+          <ArrowRight className="h-4 w-4 rotate-180"/>
         </button>
         <button type="button" onClick={() => go(1)} aria-label="Next project"
-          className="absolute right-3 sm:right-8 top-[42%] z-30 h-11 w-11 rounded-full glass-dark border border-white/[0.08] flex items-center justify-center text-ink hover:border-primary/30 transition-colors">
-          <ChevronRight className="h-5 w-5" />
+          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-10 h-11 w-11 rounded-full
+                     border border-divider bg-background/80 backdrop-blur flex items-center justify-center
+                     text-ink-2 hover:text-ink hover:border-primary/30 transition-colors duration-300">
+          <ArrowRight className="h-4 w-4"/>
         </button>
 
-        {/* Dots */}
+        {/* Position readout */}
         <div className="flex items-center justify-center gap-2.5 mt-10">
           {PROJECTS.map((p, i) => (
-            <button
-              key={p.id} type="button" onClick={() => setActive(i)}
-              aria-label={`Go to project ${i + 1}`}
-              className={`h-1.5 rounded-full transition-all duration-300 ${i === active ? 'w-7 bg-primary' : 'w-1.5 bg-divider hover:bg-muted/50'}`}
-            />
+            <button key={p.id} type="button" onClick={() => setActive(i)}
+              aria-label={`Go to project ${i + 1}`} aria-current={i === active}
+              className={`h-1.5 rounded-full transition-all duration-500
+                          ${i === active ? 'w-7 bg-primary' : 'w-1.5 bg-divider hover:bg-faint'}`}/>
           ))}
         </div>
       </div>
@@ -852,97 +860,191 @@ function Projects() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// About Me
+// About
 // ─────────────────────────────────────────────────────────────────────────────
 
-const Emph = ({ children }) => <span className="text-ink font-medium">{children}</span>
+// ─────────────────────────────────────────────────────────────────────────────
+// Process
+// ─────────────────────────────────────────────────────────────────────────────
 
-const ABOUT_POINTS = [
-  { emoji: '🤖', text: (<>I&apos;m an <Emph>AI Automation Builder</Emph> and <Emph>AI Auditor</Emph> focused on designing systems that eliminate repetitive work and help businesses operate more efficiently.</>) },
-  { emoji: '🎓', text: (<>Currently studying at <Emph>Zayed University</Emph> while building AI agents, automation workflows, voice AI systems, SaaS platforms, and business process automation solutions.</>) },
-  { emoji: '⚙️', text: (<>My toolkit revolves around <Emph>Claude Code</Emph>, <Emph>OpenAI</Emph>, <Emph>n8n</Emph>, <Emph>Next.js</Emph>, and <Emph>Supabase</Emph> — modern AI infrastructure for building real-world production systems.</>) },
-  { emoji: '🚀', text: (<>I&apos;ve built <Emph>lead generation platforms</Emph>, <Emph>AI receptionists</Emph>, <Emph>document processing systems</Emph>, <Emph>voice AI agents</Emph>, and internal business tools that automate complex workflows from end to end.</>) },
-  { emoji: '🔍', text: (<>As an <Emph>AI Auditor</Emph>, I enjoy analyzing business operations, identifying inefficiencies, and designing practical AI solutions that deliver measurable value.</>) },
-  { emoji: '💡', text: (<>I&apos;m constantly exploring new ways to combine <Emph>AI</Emph>, <Emph>automation</Emph>, and <Emph>software engineering</Emph> to solve real business problems and create systems that scale.</>) },
+const PHASES = [
+  { n: '01', lead: 'Create the container.', rest: 'The full audit, with your team.' },
+  { n: '02', lead: 'Lay the foundation.',   rest: 'Build on your tools. Guardrails on anything touching money.' },
+  { n: '03', lead: 'Activation.',           rest: 'Switch on, test live, tune it to sound like you.' },
+  { n: '04', lead: 'Integration.',          rest: 'Hand over, train your team, refine as you grow.' },
 ]
 
-function About() {
-  const ref = useRef(null)
-  useEffect(() => {
-    if (prefersReducedMotion()) return
-    const ctx = gsap.context(() => {
-      gsap.from('.about-rise', {
-        scrollTrigger: { trigger: ref.current, start: 'top 78%', once: true },
-        y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out',
-      })
-    }, ref)
-    return () => ctx.revert()
-  }, [])
-
+function Process() {
   return (
-    <section id="about" ref={ref} className="py-24 sm:py-32 lg:py-40">
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+    <section id="process" className="scroll-mt-24 py-12 sm:py-14 lg:py-16">
+      <div className="shell">
+        <SectionHead
+          eyebrow="How it works"
+          title="Four phases."
+          lede="One install. We run it the same way every time."
+        />
 
-          {/* Photo + social */}
-          <div className="about-rise lg:col-span-5 lg:sticky lg:top-32">
-            <div className="relative mx-auto max-w-sm lg:max-w-none">
-              {/* Cyan accent glow (replaces the reference's purple) */}
-              <div className="absolute -inset-5 rounded-[2.2rem] bg-primary/20 blur-3xl opacity-60 pointer-events-none" aria-hidden="true" />
-              <div className="absolute -inset-px rounded-[1.85rem] bg-gradient-to-b from-primary/35 via-primary/5 to-transparent pointer-events-none" aria-hidden="true" />
+        {/* Numeral rail on the left, one flowing line of copy on the right —
+            the bold lead-in and the rest read as a single sentence. */}
+        <div className="mt-10 sm:mt-12">
+          {PHASES.map(p => (
+            <div key={p.n}
+                 className="reveal border-t border-divider py-5 sm:py-6
+                            grid grid-cols-[auto_1fr] gap-5 sm:gap-8 items-baseline">
+              <span className="font-display text-[22px] sm:text-[26px] font-light text-ink-2/70
+                               leading-none tracking-tight tabular-nums">
+                {p.n}
+              </span>
+              <p className="text-[14px] sm:text-[15px] leading-relaxed text-muted">
+                <span className="font-semibold text-ink">{p.lead}</span>{' '}{p.rest}
+              </p>
+            </div>
+          ))}
+          <div className="rule"/>
+        </div>
+      </div>
+    </section>
+  )
+}
 
-              <div className="relative rounded-[1.8rem] overflow-hidden border border-divider bg-surface">
-                <img
-                  src="/profile.jpg"
-                  alt="Alfarid Bulbula — AI Automation Builder"
-                  className="w-full h-auto object-cover transition-transform duration-700 ease-out hover:scale-[1.02]"
-                  loading="lazy"
-                />
-                <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none" aria-hidden="true"
-                  style={{ background: 'linear-gradient(to top, rgba(7,7,12,0.55), transparent)' }} />
-                <div className="absolute top-0 inset-x-0 h-px pointer-events-none" aria-hidden="true"
-                  style={{ background: 'rgba(0,194,255,0.25)' }} />
-              </div>
+// ─────────────────────────────────────────────────────────────────────────────
+// The install
+// ─────────────────────────────────────────────────────────────────────────────
 
-              <div className="relative mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {SOCIAL_LINKS.map(({ label, href, Icon }) => (
-                  <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                    className="magnetic-btn inline-flex items-center justify-center gap-2 glass-dark text-ink rounded-2xl py-3.5 text-sm font-semibold border border-white/[0.08] hover:border-primary/30 transition-colors duration-200">
-                    <Icon className="h-4 w-4" /> {label}
-                  </a>
-                ))}
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=afbinfinity@gmail.com" target="_blank" rel="noopener noreferrer"
-                  className="magnetic-btn col-span-2 sm:col-span-1 inline-flex items-center justify-center gap-2 glass-dark text-ink rounded-2xl py-3.5 text-sm font-semibold border border-white/[0.08] hover:border-primary/30 transition-colors duration-200">
-                  <Mail className="h-4 w-4" /> Email
+const DELIVERABLES = [
+  {
+    title: 'The full audit',
+    desc:  'I map your business with your team and find what to take off your plate first',
+  },
+  {
+    title: 'Every system built and tuned',
+    desc:  'Sales, support, content, and operations, built on your tools and tuned to sound like you',
+  },
+  {
+    title: 'Your team trained',
+    desc:  'I hand it over and upskill your people so it runs without me',
+  },
+  {
+    title: 'Ongoing support',
+    desc:  'Upkeep and staying ahead of every update. Flexible, pause whenever things are running smoothly',
+  },
+]
+
+function Install() {
+  return (
+    <section id="install" className="scroll-mt-24 py-12 sm:py-14 lg:py-16">
+      <div className="shell">
+        <SectionHead
+          eyebrow="The install"
+          title="What you get."
+          lede="One engagement. Everything built, tuned, and handed over."
+        />
+
+        {/* The whole deliverable list sits inside one panel — it reads as a
+            single scope of work rather than four separate offers. */}
+        <div className="reveal panel rounded-3xl mt-9 sm:mt-10 px-6 sm:px-8 py-2 sm:py-3 max-w-prose">
+          {DELIVERABLES.map(d => (
+            <div key={d.title} className="border-t border-divider first:border-t-0 py-5 sm:py-6">
+              <h3 className="font-display text-[15px] sm:text-[16px] font-medium text-ink tracking-tight">
+                {d.title}
+              </h3>
+              <p className="lede mt-1.5 text-[13px] sm:text-[13.5px]">{d.desc}</p>
+            </div>
+          ))}
+
+          <p className="text-muted text-[13px] sm:text-[13.5px] leading-relaxed border-t border-divider pt-5 pb-6">
+            We scope it on the call, to exactly what your business needs. Then we start.
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Audience
+// ─────────────────────────────────────────────────────────────────────────────
+
+const AUDIENCE = [
+  { n: '01', lead: 'You run a real company.',   rest: 'Business operations are eating you alive.' },
+  { n: '02', lead: 'You want your time back.',  rest: 'Not another tool to manage. A system that runs without you.' },
+  { n: '03', lead: 'You move fast.',            rest: 'You can describe what you want in plain English and let me build it live.' },
+]
+
+function Audience() {
+  return (
+    <section id="who" className="scroll-mt-24 py-12 sm:py-14 lg:py-16">
+      <div className="shell">
+        <SectionHead eyebrow="Who this is for" title="Operators, not beginners."/>
+
+        {/* Same numeral-and-sentence rhythm as the phases above, but the
+            numerals sit at body size here — these are qualifiers, not steps. */}
+        <div className="mt-9 sm:mt-10">
+          {AUDIENCE.map(a => (
+            <div key={a.n}
+                 className="reveal border-t border-divider first:border-t-0 py-5 sm:py-6
+                            grid grid-cols-[auto_1fr] gap-4 sm:gap-6 items-baseline">
+              <span className="text-[13px] sm:text-[14px] leading-relaxed text-muted tabular-nums">
+                {a.n}
+              </span>
+              <p className="text-[14px] sm:text-[15px] leading-relaxed text-muted">
+                <span className="font-semibold text-ink">{a.lead}</span>{' '}{a.rest}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// About
+// ─────────────────────────────────────────────────────────────────────────────
+
+function About() {
+  return (
+    <section id="about" className="scroll-mt-24 py-12 sm:py-14 lg:py-16">
+      <div className="shell">
+        <SectionHead eyebrow="About me" title="AI Automation Builder" serif="& AI Auditor."/>
+
+        <div className="mt-10 sm:mt-12 grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+
+          {/* Portrait */}
+          <div className="reveal lg:col-span-4 lg:sticky lg:top-28">
+            <div className="relative rounded-2xl overflow-hidden border border-divider bg-surface">
+              <img src="/profile.jpg" alt="Alfarid Bulbula — AI Automation Builder" loading="lazy"
+                className="w-full h-auto object-cover transition-transform duration-[900ms] ease-out hover:scale-[1.02]"/>
+              <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none" aria-hidden="true"
+                style={{ background:'linear-gradient(to top, rgba(16,12,10,0.6), transparent)' }}/>
+            </div>
+
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {SOCIAL_LINKS.map(({ label, href, Icon }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                  className="btn btn-ghost !px-0 !py-3 !text-[12.5px]" aria-label={label}>
+                  <Icon className="h-3.5 w-3.5"/> {label}
                 </a>
-              </div>
+              ))}
+              <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_EMAIL}`} target="_blank" rel="noopener noreferrer"
+                className="btn btn-ghost !px-0 !py-3 !text-[12.5px]" aria-label="Email">
+                <Mail className="h-3.5 w-3.5"/> Email
+              </a>
             </div>
           </div>
 
-          {/* Content */}
-          <div className="lg:col-span-7">
-            <p className="about-rise font-mono text-[10px] uppercase tracking-[.25em] text-primary/60 mb-5 flex items-center gap-3">
-              <span className="inline-block h-px w-6 bg-primary/30" aria-hidden="true" /> ABOUT ME
-            </p>
-            <h2 className="about-rise font-display text-3xl sm:text-4xl lg:text-[44px] font-bold text-ink tracking-tighter leading-[1.05] mb-9">
-              AI Automation Builder
-              <span className="block font-serif italic font-medium gradient-text mt-1">&amp; AI Auditor.</span>
-            </h2>
-
-            <ul className="space-y-5 sm:space-y-6">
-              {ABOUT_POINTS.map((pt, i) => (
-                <li key={i} className="about-rise flex gap-4">
-                  <span className="shrink-0 h-9 w-9 rounded-xl bg-surface border border-divider flex items-center justify-center text-base leading-none" aria-hidden="true">
-                    {pt.emoji}
-                  </span>
-                  <p className="text-muted text-[15px] sm:text-base leading-relaxed pt-1">{pt.text}</p>
-                </li>
-              ))}
-            </ul>
-
-            <div className="about-rise flex items-center gap-3 pt-9">
-              <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 ring-pulse-green shrink-0" />
-              <span className="font-mono text-[10px] uppercase tracking-[.2em] text-muted">Available for new projects · 2026</span>
+          {/* Points — a labelled index rather than a bulleted list */}
+          <div className="lg:col-span-8">
+            {ABOUT_POINTS.map((pt, i) => (
+              <div key={i} className="reveal border-t border-divider py-5 sm:py-6 grid sm:grid-cols-12 gap-2 sm:gap-5">
+                <p className="sm:col-span-3 font-mono text-[9px] uppercase tracking-[0.2em] text-primary/55 pt-1.5">{pt.k}</p>
+                <p className="sm:col-span-9 text-muted text-[13.5px] leading-relaxed">{pt.text}</p>
+              </div>
+            ))}
+            <div className="rule"/>
+            <div className="reveal flex items-center gap-2.5 pt-8">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#9CAF7A] ring-pulse-green shrink-0"/>
+              <span className="font-mono text-[9.5px] uppercase tracking-[0.2em] text-muted">Available for new projects · 2026</span>
             </div>
           </div>
 
@@ -959,23 +1061,21 @@ function About() {
 function SentState() {
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
-      <div className="h-16 w-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-6">
-        <svg className="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
+      <div className="h-14 w-14 rounded-full border border-primary/25 bg-primary/[0.07] flex items-center justify-center mb-6">
+        <svg className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6} aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
         </svg>
       </div>
-      <h3 className="font-display text-xl font-bold text-ink mb-2">Message sent.</h3>
-      <p className="text-muted text-sm leading-relaxed max-w-[220px]">
-        I'll read it and reply within one business day.
-      </p>
+      <h3 className="font-display text-[19px] font-medium text-ink mb-2">Message sent.</h3>
+      <p className="lede text-[14px] max-w-[240px]">I&apos;ll read it and reply within one business day.</p>
     </div>
   )
 }
 
 function ContactForm() {
   const [status, setStatus] = useState('idle')
-  const [form,   setForm]   = useState({ name:'', email:'', message:'' })
-  const set = (k) => (e) => setForm(f=>({...f,[k]:e.target.value}))
+  const [form, setForm] = useState({ name:'', email:'', message:'' })
+  const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }))
   const headingRef = useRef(null)
   const headingInView = useInView(headingRef)
 
@@ -983,83 +1083,70 @@ function ContactForm() {
     e.preventDefault()
     setStatus('sending')
     // TODO: replace setTimeout with a real submission (Resend, Formspree, etc.)
-    setTimeout(()=>setStatus('sent'), 1200)
+    setTimeout(() => setStatus('sent'), 1200)
   }
 
   return (
-    <section id="contact" className="py-24 sm:py-32 border-t border-divider overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+    <section id="contact" className="scroll-mt-24 py-12 sm:py-14 lg:py-16 border-t border-divider">
+      <div className="shell">
 
-        {/* Section heading — wide, dominant, occupies the full section width */}
-        <div ref={headingRef} className="mb-14 sm:mb-16">
-          <p className="font-mono text-[10px] uppercase tracking-[.25em] text-primary/60 mb-5 flex items-center gap-3">
+        <div ref={headingRef} className="col">
+          <p className="eyebrow flex items-center gap-3 mb-6">
             <span className="inline-block h-px w-6 bg-primary/30" aria-hidden="true"/>
             <TextScramble as="span" trigger={headingInView} duration={0.5} speed={0.025}>GET IN TOUCH</TextScramble>
           </p>
-          <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl xl:text-[84px] font-bold text-ink tracking-tighter leading-[0.98] max-w-5xl">
+          <h2 className="h-statement text-[32px] sm:text-[42px] lg:text-[50px]">
             Let&apos;s build{' '}
-            <TextScramble
-              as="span"
-              trigger={headingInView}
-              duration={1.1}
-              speed={0.03}
-              className="font-serif italic font-medium gradient-text"
-            >
+            <TextScramble as="span" trigger={headingInView} duration={1.1} speed={0.03} className="italic text-primary">
               something real.
             </TextScramble>
           </h2>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div className="mt-10 sm:mt-12 grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
 
-          {/* Left: pitch + GIF accent */}
-          <div className="lg:col-span-5 flex flex-col gap-8">
-            <p className="text-muted text-base leading-relaxed max-w-sm">
-              If you have a repetitive process you want automated, or an idea for an AI system — send a message. I read everything and reply directly, even if the project isn't a fit.
+          <div className="reveal lg:col-span-5 flex flex-col gap-8">
+            <p className="lede text-[13.5px] max-w-[42ch]">
+              If you have a repetitive process you want automated, or an idea for an AI system —
+              send a message. I read everything and reply directly, even if the project isn&apos;t a fit.
             </p>
 
-            {/* GIF accent — tilted, shakes playfully on hover */}
-            <div className="relative group max-w-[340px]">
-              <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-primary/25 via-accent/15 to-transparent blur-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden="true" />
-              <div className="shake-on-hover relative rounded-2xl overflow-hidden border border-white/[0.08] bg-surface glass-dark origin-center transition-transform duration-300 ease-out">
-                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent pointer-events-none z-10" aria-hidden="true" />
+            <div className="relative group max-w-[300px] mt-2">
+              <div className="shake-on-hover relative rounded-xl overflow-hidden border border-divider bg-surface">
                 <img
                   src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDV3YXl1cDZzbHJhbmtsMGRteXpia2MxdXN5ZDA1MTAzcThtNHhocSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/SpopD7IQN2gK3qN4jS/giphy.gif"
                   alt="Animated illustration of someone working at a laptop"
-                  className="w-full h-auto object-cover"
+                  className="w-full h-auto object-cover opacity-90"
                   loading="lazy"
                 />
-                <div className="absolute bottom-0 inset-x-0 h-12 bg-gradient-to-t from-surface/80 to-transparent pointer-events-none" aria-hidden="true" />
+                <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
+                  style={{ background:'linear-gradient(to top, rgba(14,16,20,0.6), transparent 55%)' }}/>
               </div>
             </div>
 
-            <p className="font-mono text-[9px] uppercase tracking-[.18em] text-muted/45">
+            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
               Typical response within 24 hours
             </p>
           </div>
 
-          {/* Right: form */}
-          <div className="lg:col-span-7">
-            <div className="bg-surface rounded-3xl border border-divider p-8 sm:p-10">
-              {status==='sent' ? <SentState/> : (
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <Field label="Name"  id="f-name"  type="text"  value={form.name}    onChange={set('name')}    placeholder="Your name"        required/>
-                    <Field label="Email" id="f-email" type="email" value={form.email}   onChange={set('email')}   placeholder="you@company.com"  required/>
+          <div className="reveal lg:col-span-7">
+            <div className="panel p-5 sm:p-6 rounded-2xl">
+              {status === 'sent' ? <SentState/> : (
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <Field label="Name"  id="f-name"  type="text"  value={form.name}  onChange={set('name')}  placeholder="Your name"       required/>
+                    <Field label="Email" id="f-email" type="email" value={form.email} onChange={set('email')} placeholder="you@company.com" required/>
                   </div>
                   <Field
                     label="What do you want to automate?"
-                    id="f-message" type="textarea" rows={5}
+                    id="f-message" type="textarea" rows={4}
                     value={form.message} onChange={set('message')}
                     placeholder="Describe the repetitive process, the tools you use, and what outcome you're after…"
                     required
                   />
-                  <button
-                    type="submit"
-                    disabled={status==='sending'}
-                    className="magnetic-btn mt-1 w-full flex items-center justify-center gap-2 bg-primary text-deep py-4 rounded-2xl font-semibold text-sm shadow-lg shadow-primary/20 disabled:opacity-60 disabled:cursor-not-allowed"
-                  >
-                    {status==='sending' ? 'Sending…' : (<>Send message <ArrowUpRight className="h-4 w-4"/></>)}
+                  <button type="submit" disabled={status === 'sending'}
+                    className="btn btn-solid w-full !py-3 !text-[13px] mt-1 disabled:opacity-60 disabled:cursor-not-allowed">
+                    {status === 'sending' ? 'Sending…' : (<>Send message <ArrowUpRight className="h-4 w-4"/></>)}
                   </button>
                 </form>
               )}
@@ -1078,70 +1165,29 @@ function ContactForm() {
 
 function Footer() {
   return (
-    <footer className="bg-deep border-t border-white/[0.07]">
-
-      {/* Main link grid */}
-      <div className="py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
-
-            {/* Brand block */}
-            <div className="sm:col-span-2">
-              <div className="flex items-center gap-2.5 mb-4">
-                <img src="/logo-icon.png" alt="" className="h-8 w-8 rounded-xl object-contain bg-black p-0.5 shrink-0" aria-hidden="true" />
-                <span className="font-display font-bold text-sm text-ink tracking-tight">Alfarid B</span>
-              </div>
-              <p className="text-muted/70 text-sm leading-relaxed max-w-[220px]">
-                Building AI systems that handle the repetitive work — so you don't have to.
-              </p>
-              <div className="mt-6 flex items-center gap-2">
-                <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 ring-pulse-green shrink-0"/>
-                <span className="font-mono text-[9px] uppercase tracking-[.18em] text-muted/55">Available for projects</span>
-              </div>
-            </div>
-
-            {/* Work links */}
+    <footer className="border-t border-divider py-14">
+      <div className="shell">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
+          <div className="flex items-center gap-2.5">
+            <img src="/logo-icon.png" alt="" className="h-7 w-7 rounded-lg object-contain bg-black shrink-0" aria-hidden="true"/>
             <div>
-              <p className="font-mono text-[9px] uppercase tracking-[.2em] text-muted/55 mb-5">Work</p>
-              <ul className="space-y-3">
-                {[{label:'Services',href:'#services'},{label:'Projects',href:'#work'},{label:'About',href:'#about'}].map(({label,href})=>(
-                  <li key={label}>
-                    <a href={href} className="text-sm text-muted/65 hover:text-ink transition-colors duration-200 lift-on-hover inline-block py-1">{label}</a>
-                  </li>
-                ))}
-              </ul>
+              <p className="font-display text-[13.5px] font-medium text-ink tracking-tight">Alfarid Bulbula</p>
+              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-faint mt-0.5">AI Automation Builder</p>
             </div>
-
-            {/* Contact + social */}
-            <div>
-              <p className="font-mono text-[9px] uppercase tracking-[.2em] text-muted/55 mb-5">Contact</p>
-              <ul className="space-y-3">
-                <li>
-                  <a href={`mailto:${CONTACT_EMAIL}`} className="text-sm text-muted/65 hover:text-ink transition-colors duration-200 lift-on-hover inline-block break-all py-1">{CONTACT_EMAIL}</a>
-                </li>
-                {SOCIAL_LINKS.map(({label,href,Icon})=>(
-                  <li key={label}>
-                    <a href={href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted/65 hover:text-ink transition-colors duration-200 group py-1">
-                      <Icon className="h-3.5 w-3.5 shrink-0 text-muted/40 group-hover:text-primary transition-colors duration-200" strokeWidth={1.8}/>
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
           </div>
-        </div>
-      </div>
 
-      {/* Legal strip */}
-      <div className="border-t border-white/[0.06] py-6">
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-          <p className="font-mono text-[9px] text-muted/35">© 2026 Alfarid Bulbula. All rights reserved.</p>
-          <p className="font-mono text-[9px] text-muted/25">AI Automation Builder</p>
+          <nav className="flex flex-wrap items-center gap-x-7 gap-y-3" aria-label="Footer">
+            {NAV_LINKS.map(({ label, href }) => (
+              <a key={label} href={href} className="text-[13px] text-muted hover:text-ink transition-colors duration-200">{label}</a>
+            ))}
+            {SOCIAL_LINKS.map(({ label, href }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                className="text-[13px] text-muted hover:text-ink transition-colors duration-200">{label}</a>
+            ))}
+          </nav>
         </div>
-      </div>
 
+      </div>
     </footer>
   )
 }
@@ -1151,10 +1197,7 @@ function Footer() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function App() {
-  useEffect(()=>{
-    const id=setTimeout(()=>ScrollTrigger.refresh(),200)
-    return()=>clearTimeout(id)
-  },[])
+  useReveal()
   return (
     <div className="relative">
       <div className="noise-overlay" aria-hidden="true"/>
@@ -1162,8 +1205,10 @@ export default function App() {
       <main>
         <Hero/>
         <Features/>
-        <Pillars/>
         <Projects/>
+        <Process/>
+        <Install/>
+        <Audience/>
         <About/>
         <ContactForm/>
       </main>
