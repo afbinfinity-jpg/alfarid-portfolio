@@ -25,18 +25,21 @@ export default {
         'divider-2': '#241E19',
       },
       fontFamily: {
-        // Editorial serif for statements, a quiet modern sans for everything
-        // you actually have to read, mono for the small tracked labels.
-        display: ['Geist', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-        body:    ['Geist', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-        serif:   ['"Instrument Serif"', 'Georgia', 'serif'],
-        mono:    ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        // One family for the whole site. Hierarchy comes from weight, size,
+        // tracking and case — never from a second typeface. The four keys are
+        // kept as aliases so existing markup keeps working; they all resolve
+        // to the same grotesk.
+        display: ['"Inter Tight"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'system-ui', 'sans-serif'],
+        body:    ['"Inter Tight"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'system-ui', 'sans-serif'],
+        serif:   ['"Inter Tight"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'system-ui', 'sans-serif'],
+        mono:    ['"Inter Tight"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'system-ui', 'sans-serif'],
       },
       maxWidth: {
-        // An editorial measure: the page column stays narrow so the margins
-        // do the work, and prose sits on a comfortable line length.
-        shell: '1000px',
-        col:   '600px',
+        // The page fills the screen on a laptop and keeps only a small margin
+        // on anything wider. Prose still sits on its own comfortable measure,
+        // so widening the page never widens a line of text past reading.
+        shell: '1400px',
+        col:   '720px',
         prose: '680px',
       },
       animation: {

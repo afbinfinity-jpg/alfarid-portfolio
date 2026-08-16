@@ -42,21 +42,25 @@
 
   .rule  { @apply h-px w-full bg-divider; }
 
-  /* ── Editorial type ────────────────────────────────────────────
-     Serif is rationed: statements only, never UI. */
+  /* ── Type scale ────────────────────────────────────────────────
+     One grotesk for everything. A heading is a heading because it is
+     heavy and tightly tracked, a label because it is small and widely
+     tracked — never because it changed typeface. */
   .eyebrow {
-    @apply font-mono text-[10px] uppercase text-primary;
+    @apply font-display font-medium text-[10px] uppercase text-primary;
     letter-spacing: 0.22em;
   }
   .h-statement {
-    @apply font-serif font-normal text-ink;
-    letter-spacing: -0.012em;
-    line-height: 1.06;
+    @apply font-display font-bold text-ink;
+    /* Big grotesk needs negative tracking to stay optically even; the
+       larger the type, the tighter it wants to sit. */
+    letter-spacing: -0.032em;
+    line-height: 1.02;
   }
   .h-section {
-    @apply font-serif font-normal text-ink;
-    letter-spacing: -0.012em;
-    line-height: 1.1;
+    @apply font-display font-bold text-ink;
+    letter-spacing: -0.028em;
+    line-height: 1.08;
   }
   .lede { @apply text-muted leading-relaxed; }
   .prose-col { @apply w-full max-w-prose; }
@@ -78,7 +82,7 @@
      hairline ghost for everything else. */
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-full
-           font-display text-[13.5px] font-medium px-6 py-3
+           font-display text-[13.5px] font-semibold px-6 py-3
            transition-all duration-300 ease-out whitespace-nowrap;
   }
   .btn-solid {
@@ -101,7 +105,7 @@
 
   /* Arrow links — the arrow steps forward, nothing else moves. */
   .arrow-link {
-    @apply inline-flex items-center gap-2 font-display text-[13.5px] font-medium
+    @apply inline-flex items-center gap-2 font-display text-[13.5px] font-semibold
            text-ink transition-colors duration-200;
   }
   .arrow-link svg { transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1); }
@@ -134,7 +138,7 @@
 
   /* ── Tag ───────────────────────────────────────────────────── */
   .tag {
-    @apply font-mono text-[9.5px] uppercase text-muted/80 px-2.5 py-1
+    @apply font-display font-medium text-[9.5px] uppercase text-muted/80 px-2.5 py-1
            rounded-full border border-divider bg-background;
     letter-spacing: 0.1em;
   }
@@ -247,6 +251,89 @@
   .hero-rise  { opacity: 1; transform: none; transition: none; }
   .hero-media { opacity: 1; transform: none; transition: none; }
   .hero-drift { animation: none; }
+}
+
+/* ── Case-study plate ────────────────────────────────────────────────────────
+   Its own reveal rather than the page-wide .reveal sweep, which runs on mount
+   and so never sees content that appears later inside a modal. A touch more
+   travel and a slower curve than .reveal, because these are large images and
+   should settle rather than snap. */
+.reveal-plate {
+  opacity: 0;
+  transform: translateY(26px) scale(0.985);
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal-plate[data-in] { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-plate { opacity: 1; transform: none; transition: none; }
+}
+
+/* ── Capability accordion ────────────────────────────────────────────────────
+   A row collapses to number / name / indicator. The body opens by animating
+   grid-template-rows from 0fr to 1fr, which transitions to the content's own
+   height without measuring it in JS — no fixed max-height to outgrow when the
+   copy changes. */
+.cap-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cap-body > * { overflow: hidden; min-height: 0; }
+.cap-row.open .cap-body { grid-template-rows: 1fr; }
+
+/* The inner content trails the height slightly, so it fades in against an
+   already-opening frame rather than racing it. */
+.cap-inner {
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.35s ease-out, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cap-row.open .cap-inner {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.12s;
+}
+
+/* Plus → × on open. */
+.cap-mark { transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+.cap-row.open .cap-mark { transform: rotate(135deg); }
+
+/* A hairline that draws in from the left under the open row's header. */
+.cap-rule {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cap-row.open .cap-rule { transform: scaleX(1); }
+
+/* Hover preview. Exactly one of these exists for the whole list — it is moved
+   and refilled rather than duplicated per row, so two can never be on screen
+   at once. It glides between rows; the card itself also slides in from the
+   left on appear. Inert to pointers so it can never steal a click, and it
+   lives in its own column so it cannot overlap or displace the rows. */
+.cap-preview {
+  pointer-events: none;
+  transition:
+    opacity 0.26s ease-out,
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    top 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cap-preview.hidden-state {
+  opacity: 0;
+  transform: translateY(-50%) translateX(-8px);
+}
+.cap-preview.shown {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cap-body, .cap-inner, .cap-mark, .cap-rule { transition: none; }
+  .cap-preview { transition: opacity 0.01ms; }
 }
 
 /* ── Pillar sweep ────────────────────────────────────────────────────────── */

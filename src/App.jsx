@@ -41,19 +41,19 @@ const CAPABILITIES = [
   {
     n: '01',
     title: 'AI Reception & Booking',
-    desc: 'AI handles incoming website and WhatsApp enquiries 24/7, answers approved treatment questions, qualifies leads, and books appointments.',
+    desc: 'AI handles incoming website and WhatsApp inquiries 24/7, answers approved questions about your services, qualifies leads, and books appointments.',
     tools: [
       'AI website assistant',
       'WhatsApp conversations',
       'Lead qualification & appointment booking',
-      'Treatment FAQs & pricing',
+      'Service FAQs & pricing',
       'Human handoff when needed',
     ],
   },
   {
     n: '02',
     title: 'Lead Follow-Up & Recovery',
-    desc: "Automatically follows up with leads your front desk didn't reach, missed calls, and people who showed interest but never booked.",
+    desc: "Automatically follows up with leads your team didn't reach, missed calls, and people who showed interest but never booked.",
     tools: [
       'Uncontacted lead follow-up',
       'Missed-call SMS/WhatsApp recovery',
@@ -64,12 +64,12 @@ const CAPABILITIES = [
   },
   {
     n: '03',
-    title: 'Patient Retention & Rebooking',
-    desc: "Keeps existing clients engaged after their appointment and brings them back when they're due for another treatment.",
+    title: 'Client Retention & Rebooking',
+    desc: "Keeps existing clients engaged after their appointment and brings them back when they're due for another visit.",
     tools: [
       'Appointment reminders',
       'No-show recovery',
-      'Post-treatment follow-up',
+      'Post-appointment follow-up',
       'Review requests',
       'Rebooking reminders',
       'Membership/package follow-up',
@@ -87,18 +87,110 @@ const PROJECTS = [
     result:   'Enquiries get answered in seconds instead of hours, missed calls are recovered the same day, and follow-up runs without anyone remembering to do it — so the calendar stays full without adding front-desk hours.',
     tools:    ['WhatsApp', 'AI Agent', 'n8n', 'Calendar', 'CRM'],
     accent:   'primary',
-    image:    '/screenshots/med-spa-dashboard.png',
+    image:    '/screenshots/luna/live-demos-desktop.png',
+    // 3:2 plate in a 16:9 frame — anchoring low keeps the laptop in shot and
+    // takes the crop out of the empty wall above it instead.
+    imagePos: '62%',
+    // Rows rather than a flat list, so the rhythm — full bleed, a pair, a
+    // small detail — is declared here instead of inferred by the renderer.
+    // Intrinsic w/h travel with each image so the browser reserves the right
+    // box and nothing is ever stretched to fit.
+    gallery: [
+      {
+        kind: 'full',
+        items: [{
+          src: '/screenshots/luna/live-demos-desktop.png', w: 1536, h: 1024,
+          label: 'Live Demos',
+          caption: 'Six scenarios run start to finish — each one plays on its own and updates the dashboard as it goes.',
+        }],
+      },
+      {
+        kind: 'pair',
+        items: [
+          {
+            src: '/screenshots/luna/live-demos-mobile.png', w: 1024, h: 1536,
+            label: 'On mobile',
+            caption: 'The same system in the owner’s hand.',
+          },
+          {
+            src: '/screenshots/luna/identity.png', w: 1254, h: 1254,
+            label: 'Identity',
+            caption: 'A clinic-facing mark, kept deliberately plain so the data stays the loudest thing on screen.',
+          },
+        ],
+      },
+      {
+        // A small plate on the left, with the two result charts stacked into
+        // the space beside it — the row the case study closes on.
+        kind: 'detail',
+        items: [{
+          src: '/screenshots/luna/navigation.png', w: 502, h: 710,
+          label: 'Navigation',
+          caption: 'Five destinations, no sub-menus. Everything the front desk needs is one click from anywhere.',
+        }],
+        stack: [
+          {
+            src: '/screenshots/luna/performance-trend.png', w: 922, h: 786,
+            label: 'Performance',
+            caption: 'Leads against appointments over six months.',
+          },
+          {
+            src: '/screenshots/luna/appointments-by-source.png', w: 622, h: 624,
+            label: 'Appointments by source',
+            caption: 'Where the bookings actually came from.',
+          },
+        ],
+      },
+    ],
   },
   {
-    id:       1,
-    title:    'AI Lead Generation & Qualification Platform',
-    subtitle: 'Multi-tenant platform for capturing, scoring, and converting leads',
-    problem:  'Businesses were managing leads across multiple tools, manually qualifying prospects, following up through email and phone, and losing opportunities due to slow response times and fragmented workflows.',
-    solution: 'Built a multi-tenant AI-powered platform that captures, scores, nurtures, and qualifies leads through chat, email, and AI voice calls. The system combines CRM pipeline management, automated outreach, appointment booking, and an AI copilot that helps teams manage and act on leads more efficiently.',
-    result:   'Created a complete lead-to-appointment automation system with AI voice calling, automated email campaigns, intelligent lead scoring, appointment scheduling, and centralized pipeline management within a single platform.',
-    tools:    ['Next.js 16', 'Supabase', 'n8n', 'Claude', 'Vapi', 'Cal.com'],
+    id:       5,
+    title:    'Med Spa Website & AI Lead Acquisition System',
+    subtitle: 'Website design, lead capture & automated patient acquisition',
+    problem:  'Aesthetic clinics can generate significant website traffic, but many potential clients leave without booking. Visitors may be interested in a treatment but not ready to schedule a consultation immediately, resulting in valuable leads being lost with no way for the clinic to follow up.',
+    solution: [
+      'Designed and built a premium, conversion-focused med spa website with an integrated lead acquisition system. Visitors can book directly, contact the clinic through WhatsApp, interact with the AI assistant, or submit their name, phone number, email, and treatment interest through a low-friction lead capture form.',
+      "The captured enquiry can then enter the clinic's lead pipeline for qualification and automated follow-up rather than disappearing after the visitor leaves the website.",
+    ],
+    result:   "Created a complete digital acquisition experience that combines the clinic's website, lead capture, AI assistance, WhatsApp, and appointment booking into one connected system — giving the clinic multiple opportunities to convert website traffic into qualified enquiries and consultations.",
+    tools:    ['Website Design', 'AI Assistant', 'WhatsApp', 'Lead Capture', 'Booking'],
     accent:   'primary',
-    image:    '/screenshots/project-1.png',
+    image:    '/screenshots/luna-site/website.png',
+    gallery: [
+      {
+        kind: 'full',
+        items: [{
+          src: '/screenshots/luna-site/website.png', w: 1536, h: 1024,
+          label: 'The website',
+          caption: 'A consultation-first homepage — booking, WhatsApp and the AI assistant all reachable without scrolling.',
+        }],
+      },
+      {
+        // Both plates are portrait, so the taller ratio takes the narrower
+        // track and the two land at roughly the same height.
+        kind: 'pair',
+        items: [
+          {
+            src: '/screenshots/luna-site/ai-assistant.png', w: 864, h: 1570,
+            label: 'AI assistant',
+            caption: 'Answers from approved clinic information, with a route to WhatsApp or a consultation at any point.',
+          },
+          {
+            src: '/screenshots/luna-site/lead-capture.png', w: 1024, h: 1536,
+            label: 'Lead capture',
+            caption: 'The low-friction path for visitors who are interested but not ready to book — name, number, email, treatment interest.',
+          },
+        ],
+      },
+      {
+        kind: 'full',
+        items: [{
+          src: '/screenshots/luna-site/acquisition-flow.png', w: 1536, h: 1024,
+          label: 'Acquisition flow',
+          caption: 'Website enquiry into the pipeline and on to follow-up — so an interested visitor is still reachable after they leave.',
+        }],
+      },
+    ],
   },
   {
     id:       4,
@@ -109,7 +201,79 @@ const PROJECTS = [
     result:   'Created an end-to-end automation workflow that eliminates manual invoice processing, centralizes extracted information, and provides teams with searchable, structured records through a unified dashboard.',
     tools:    ['GPT-4o Vision', 'Queue Processing', 'PDF Automation', 'MongoDB', 'Google Sheets', 'Workflow Orchestration'],
     accent:   'accent',
-    image:    '/screenshots/project-4.png',
+    image:    '/screenshots/invoice/upload.png',
+    // Same 3:2-in-16:9 crop as the other laptop plates.
+    imagePos: '62%',
+    gallery: [
+      {
+        kind: 'full',
+        items: [{
+          src: '/screenshots/invoice/upload.png', w: 1536, h: 1024,
+          label: 'Upload',
+          caption: 'Invoices are dropped in and queued for extraction — the only manual step in the pipeline.',
+        }],
+      },
+    ],
+  },
+  {
+    id:       6,
+    title:    'Business Sales & Payment Management System',
+    subtitle: 'Website design, business management & custom SaaS development',
+    problem:  'Small businesses often manage sales, customer debts, inventory, employee activity, and payments across spreadsheets, paper records, and messaging apps. This makes it difficult for owners to maintain visibility over transactions, control employee access, and ensure that payments have actually been received before customer balances are updated.',
+    solution: [
+      'Designed and built a centralized business management platform that connects sales, inventory, customers, employees, outstanding payments, and financial approvals in one system.',
+      'Employees can quickly record and edit sales, manage customer information, and communicate privately with administrators, while administrators maintain control over payment approvals and business-wide financial information.',
+      'The system also includes role-based access, employee performance tracking, Telegram integration, multilingual support, audit history, notifications, and automated customer/account management — creating a tailored internal SaaS experience rather than a simple website.',
+    ],
+    result: [
+      'Created a complete operational system that gives the business a single place to manage its day-to-day activity, while giving the owner greater visibility and control over sales, payments, employees, inventory, and customer accounts.',
+      'The platform turns fragmented business operations into a connected digital workflow, with the flexibility to be customized and deployed for other businesses with similar operational needs.',
+    ],
+    tools:    ['Custom SaaS', 'Role-Based Access', 'Payments', 'Telegram', 'Multilingual'],
+    accent:   'primary',
+    image:    '/screenshots/sala/dashboard.png',
+    gallery: [
+      {
+        kind: 'full',
+        items: [{
+          src: '/screenshots/sala/dashboard.png', w: 1536, h: 1024,
+          label: 'The dashboard',
+          caption: 'Sales, outstanding balances and recent activity in one view — what the owner opens to see where the business stands.',
+        }],
+      },
+      {
+        kind: 'full',
+        items: [{
+          src: '/screenshots/sala/platform.png', w: 1448, h: 1086,
+          label: 'The platform',
+          caption: 'Outstanding balance, collections and unpaid invoices on one screen — the owner’s view of where the money actually stands.',
+        }],
+      },
+      {
+        // Navigation on the left, the other two stacked beside it. The lead
+        // takes the wider track here because the pair on the right is two
+        // tall plates — it keeps the two columns close in height.
+        kind: 'detail',
+        wideLead: true,
+        items: [{
+          src: '/screenshots/sala/navigation.png', w: 570, h: 1094,
+          label: 'Navigation',
+          caption: 'Split between day-to-day work and the management surfaces behind it — what an employee touches, and what only an administrator does.',
+        }],
+        stack: [
+          {
+            src: '/screenshots/sala/ask-your-shop.png', w: 852, h: 900,
+            label: 'Ask about your shop',
+            caption: 'Plain-language questions answered from the business’s own records, without anything leaving the system.',
+          },
+          {
+            src: '/screenshots/sala/mobile-signin.png', w: 853, h: 1844,
+            label: 'On mobile',
+            caption: 'Role-based sign-in with language selected up front — the same platform from the shop floor.',
+          },
+        ],
+      },
+    ],
   },
 ]
 
@@ -119,6 +283,11 @@ const SOCIAL_LINKS = [
 ]
 
 const CONTACT_EMAIL = 'afbinfinity@gmail.com'
+
+// The booking link. The nav CTAs go straight here; the hero and the contact
+// form stay on the page, so someone not ready to commit to a call still has
+// somewhere to land.
+const CALENDLY_URL = 'https://calendly.com/afbinfinity/ai-audit'
 
 const Emph = ({ children }) => <span className="text-ink font-medium">{children}</span>
 
@@ -180,7 +349,10 @@ function SectionHead({ eyebrow, title, serif, lede, className = '' }) {
       <Eyebrow className="reveal mb-5 sm:mb-6">{eyebrow}</Eyebrow>
       <h2 className="reveal h-section text-[28px] sm:text-[34px] lg:text-[42px]">
         {title}{' '}
-        {serif && <span className="h-statement italic text-primary block sm:inline">{serif}</span>}
+        {/* The closing clause is a line break, not a colour change — it stays
+            in the heading's own cream. The orange is left to the eyebrow and
+            the small marks around it. */}
+        {serif && <span className="block sm:inline">{serif}</span>}
       </h2>
       {lede && <p className="reveal lede mt-4 text-[14px] max-w-[62ch]">{lede}</p>}
     </div>
@@ -188,10 +360,10 @@ function SectionHead({ eyebrow, title, serif, lede, className = '' }) {
 }
 
 function Field({ label, id, type = 'text', value, onChange, placeholder, required, rows }) {
-  const cls = 'w-full bg-background border border-divider rounded-lg px-3.5 py-2.5 text-[13.5px] text-ink placeholder:text-faint font-body focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/15 transition-colors duration-200'
+  const cls = 'w-full bg-background border border-divider rounded-lg px-4 py-2.5 text-[13.5px] text-ink placeholder:text-faint font-body focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/15 transition-colors duration-200'
   return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="font-mono text-[8.5px] uppercase tracking-[0.2em] text-muted">{label}</label>
+    <div className="flex flex-col gap-2.5">
+      <label htmlFor={id} className="font-mono text-[9.5px] uppercase tracking-[0.2em] text-muted">{label}</label>
       {type === 'textarea'
         ? <textarea id={id} className={cls + ' resize-none'} rows={rows} value={value} onChange={onChange} placeholder={placeholder} required={required} />
         : <input    id={id} type={type}  className={cls}             value={value} onChange={onChange} placeholder={placeholder} required={required} />
@@ -392,12 +564,12 @@ function Navbar() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <a href="#contact"
+            <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer"
                className={`hidden lg:inline-flex items-center gap-2 transition-all duration-500 ${
                  scrolled
                    ? 'btn btn-solid !py-2.5 !px-5'
                    : 'text-[11px] uppercase tracking-[0.2em] text-ink-2/80 hover:text-ink font-display'}`}>
-              {scrolled ? "Let's talk" : 'Book a call'}
+              Book a call
               <ArrowUpRight className="h-3.5 w-3.5"/>
             </a>
             <button onClick={() => setOpen(v => !v)}
@@ -421,8 +593,9 @@ function Navbar() {
             ))}
           </nav>
           <div className="mt-auto pt-8">
-            <a href="#contact" onClick={close} className="btn btn-solid w-full !py-4">
-              Let&apos;s talk <ArrowUpRight className="h-4 w-4"/>
+            <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" onClick={close}
+               className="btn btn-solid w-full !py-4">
+              Book a call <ArrowUpRight className="h-4 w-4"/>
             </a>
           </div>
         </div>
@@ -518,16 +691,20 @@ function Hero() {
         {/* Sits low on purpose: the plate's desk edge runs across the middle,
             and the type belongs in the dark floor beneath it, not on top of
             the notebook. */}
-        <div className="shell w-full pb-[11vh] sm:pb-[6vh] lg:pb-[7vh]">
+        {/* Dropped a couple of vh from the original: the eyebrow was landing on
+            the bright cable running across the plate, which cut the tracked caps
+            in half. Lower, it sits on the dark floor. */}
+        <div className="shell w-full pb-[8vh] sm:pb-[4vh] lg:pb-[4.5vh]">
 
           <p className={`hero-rise ${lit ? 'in' : ''} font-display text-[10px] sm:text-[11.5px] uppercase`}
-             style={{ letterSpacing: '0.32em', color: HERO_ACCENT, transitionDelay: '400ms' }}>
+             style={{ letterSpacing: '0.32em', color: HERO_ACCENT, transitionDelay: '400ms',
+                      textShadow: '0 1px 20px rgba(23,19,16,0.9)' }}>
             Alfarid Worakie <span className="opacity-60 mx-1.5">·</span> Abu Dhabi
           </p>
 
-          <h1 className={`hero-rise ${lit ? 'in' : ''} font-serif font-normal text-ink mt-4 sm:mt-6
+          <h1 className={`hero-rise ${lit ? 'in' : ''} font-display font-extrabold text-ink mt-4 sm:mt-6
                           text-[46px] sm:text-[80px] lg:text-[108px] xl:text-[124px]`}
-              style={{ letterSpacing: '-0.03em', lineHeight: 0.94, transitionDelay: '540ms',
+              style={{ letterSpacing: '-0.042em', lineHeight: 0.92, transitionDelay: '540ms',
                        textShadow: '0 2px 44px rgba(23,19,16,0.65)' }}>
             Rawna Automation<span style={{ color: HERO_ACCENT }}>.</span>
           </h1>
@@ -545,7 +722,9 @@ function Hero() {
                          font-display text-[11px] sm:text-[12px] uppercase text-ink`}
              style={{ letterSpacing: '0.24em', transitionDelay: '820ms' }}>
             Let&apos;s talk
-            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5"/>
+            {/* Points down because the link scrolls the page, not away from it.
+                The hover nudge follows the arrow. */}
+            <ArrowDown className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-1.5"/>
           </a>
 
         </div>
@@ -570,56 +749,171 @@ function Hero() {
 // Capabilities
 // ─────────────────────────────────────────────────────────────────────────────
 
-function Features() {
+// One capability, collapsed to a single line until asked. Clicking opens the
+// full detail; hovering only reports the row upward, since the preview card
+// itself is owned by the parent. Both the open row and the previewed row are
+// parent state, so only one of each can ever exist.
+function CapabilityRow({ cap, Visual, open, onToggle, onPeek, onPeekEnd }) {
+  const panelId = `cap-panel-${cap.n}`
+  const rowRef = useRef(null)
+
+  // Hand the element up so the parent can align the preview to this row.
+  // Reported on enter rather than on mount, so the measurement is always
+  // against current layout rather than a cached value.
+  const peek = () => onPeek(rowRef.current)
+
   return (
-    <section id="services" className="scroll-mt-24 py-12 sm:py-14 lg:py-16">
-      <div className="shell">
-        <SectionHead
-          eyebrow="What we do"
-          title="We build AI systems that turn med spa enquiries into"
-          serif="booked appointments."
-          lede="We take the repetitive work off your front desk — answering questions, following up with leads, recovering missed calls, and keeping your calendar full. Built around your clinic, your treatments, and the way your team already works."
-        />
+    <div ref={rowRef}
+         className={`cap-row ${open ? 'open' : ''} relative border-b border-divider-2`}
+         onMouseEnter={peek}
+         onFocusCapture={peek}>
+      <h3>
+        <button
+          type="button"
+          onClick={onToggle}
+          onBlur={onPeekEnd}
+          aria-expanded={open}
+          aria-controls={panelId}
+          className="group w-full flex items-center gap-6 sm:gap-10 py-7 sm:py-9 lg:py-10 text-left
+                     transition-colors duration-300"
+        >
+          <span className="font-mono text-[10px] sm:text-[11px] text-faint group-hover:text-primary
+                           transition-colors duration-300 shrink-0"
+                style={{ letterSpacing: '0.22em' }}>
+            {cap.n}
+          </span>
 
-        {/* Three panels, side by side on desktop and stacked on a phone.
-            Each one runs label → title → live visual → copy → list, and the
-            visual block is a fixed height so the three descriptions line up
-            across the row however long the titles run. */}
-        <div className="mt-10 sm:mt-12 grid gap-5 lg:gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {CAPABILITIES.map((cap, i) => {
-            const Visual = CAP_VISUALS[i]
-            return (
-              <div key={cap.n}
-                   className="reveal panel panel-hover flex flex-col p-5 rounded-2xl">
-                <p className="font-mono text-[9.5px] uppercase text-muted/80" style={{ letterSpacing: '0.22em' }}>
-                  Capability · {cap.n}
-                </p>
+          <span className={`flex-1 font-display text-[19px] sm:text-[24px] lg:text-[28px] font-semibold
+                            tracking-tight transition-colors duration-300
+                            ${open ? 'text-ink' : 'text-ink-2 group-hover:text-ink'}`}>
+            {cap.title}
+          </span>
 
-                {/* Reserved for two lines once the cards sit side by side, so
-                    a title that wraps doesn't shove its visual out of line
-                    with the other two. */}
-                <h3 className="font-display text-[16px] sm:text-[17px] font-semibold text-ink tracking-tight mt-2.5
-                               lg:min-h-[46px]">
-                  {cap.title}
-                </h3>
+          {/* Two hairlines crossed into a plus, rotating to an × when open.
+              Drawn rather than an icon so it inherits the row's weight. */}
+          <span className={`cap-mark relative h-3.5 w-3.5 shrink-0 transition-colors duration-300
+                            ${open ? 'text-primary' : 'text-faint group-hover:text-primary'}`}
+                aria-hidden="true">
+            <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-current"/>
+            <span className="absolute top-0 left-1/2 w-px h-full -translate-x-1/2 bg-current"/>
+          </span>
+        </button>
+      </h3>
 
-                <div className="mt-4">
-                  <Visual/>
-                </div>
+      {/* Full detail. Always in the DOM so the height has something to animate
+          to; hidden from assistive tech while collapsed. Nothing inside is
+          focusable, so aria-hidden alone is enough to keep it out of the way. */}
+      <div id={panelId} className="cap-body" role="region" aria-hidden={!open}>
+        <div>
+          <div className="cap-inner pb-10 sm:pb-12 pl-10 sm:pl-[70px] pr-2">
+            <div className="cap-rule h-px bg-divider mb-8" aria-hidden="true"/>
 
-                <p className="lede mt-3.5 text-[13px]">{cap.desc}</p>
+            <div className="grid gap-8 lg:gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-start">
+              <div>
+                <p className="lede text-[14px] sm:text-[15px] max-w-[54ch]">{cap.desc}</p>
 
-                <ul className="mt-4 space-y-2">
+                <ul className="mt-7 space-y-3.5">
                   {cap.tools.map(t => (
-                    <li key={t} className="flex items-start gap-2.5 text-[12.5px] text-ink-2/85">
-                      <span className="h-1 w-1 rounded-full bg-primary shrink-0 mt-[6px]" aria-hidden="true"/>
+                    <li key={t} className="flex items-start gap-2.5 text-[13px] text-ink-2/85">
+                      <span className="h-1 w-1 rounded-full bg-primary shrink-0 mt-[7px]" aria-hidden="true"/>
                       {t}
                     </li>
                   ))}
                 </ul>
               </div>
-            )
-          })}
+
+              {/* The live visual keeps its place, now only for the row being
+                  read rather than all three at once. */}
+              <div className="w-full">
+                <Visual/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function Features() {
+  // Null until asked — the section opens fully collapsed.
+  const [openCap, setOpenCap] = useState(null)
+
+  // The single previewed row: which capability, and where to sit vertically.
+  // One piece of state for the whole list is what guarantees one card.
+  const [peek, setPeek] = useState(null)
+
+  const gridRef = useRef(null)
+
+  // Only a real cursor gets previews. Touch reports no usable hover, and a
+  // card it cannot dismiss would sit there stranded.
+  const canHover = () =>
+    typeof window !== 'undefined' &&
+    window.matchMedia('(hover: hover) and (pointer: fine)').matches
+
+  // Measure against the grid rather than reading offsetTop, so the number is
+  // correct regardless of which ancestor happens to be positioned.
+  const showPeek = (i, el) => {
+    if (!canHover() || !el || !gridRef.current) return
+    const row = el.getBoundingClientRect()
+    const grid = gridRef.current.getBoundingClientRect()
+    setPeek({ i, top: row.top - grid.top + row.height / 2 })
+  }
+
+  const active = peek && openCap !== peek.i ? peek : null
+
+  return (
+    <section id="services" className="scroll-mt-24 py-12 sm:py-14 lg:py-16">
+      <div className="shell">
+        <SectionHead
+          eyebrow="What we do"
+          title="We build AI systems that turn inquiries into"
+          serif="booked appointments."
+          lede="We take the repetitive work off your team — answering questions, following up with leads, recovering missed calls, and keeping your calendar full. Built around your business, your services, and the way your team already works."
+        />
+
+        {/* A stack of rows rather than three filled cards. Collapsed, each row
+            is number / name / mark; the detail is one click away and only one
+            row holds it at a time. The preview lives in its own column to the
+            right, so it can never overlap or displace a row. */}
+        <div
+          ref={gridRef}
+          className="reveal mt-12 sm:mt-16 relative border-t border-divider-2"
+          onMouseLeave={() => setPeek(null)}
+        >
+          {CAPABILITIES.map((cap, i) => (
+            <CapabilityRow
+              key={cap.n}
+              cap={cap}
+              Visual={CAP_VISUALS[i]}
+              open={openCap === i}
+              onToggle={() => setOpenCap(openCap === i ? null : i)}
+              onPeek={el => showPeek(i, el)}
+              onPeekEnd={() => setPeek(null)}
+            />
+          ))}
+
+          {/* The preview floats over the right end of the row it belongs to —
+              the rows keep the full width, and this is inert to pointers so
+              covering them costs nothing. Held clear of the right edge so the
+              row's own mark stays visible under it. Hidden below lg, where
+              tap-to-expand is the whole interaction. */}
+          <div className="hidden lg:block" aria-hidden="true">
+            <div
+              className={`cap-preview absolute z-30 right-12 w-[340px] ${active ? 'shown' : 'hidden-state'}`}
+              style={{ top: active ? active.top : (peek?.top ?? 0) }}
+            >
+              <div className="panel glass rounded-xl px-5 py-4">
+                <p className="font-mono text-[9px] uppercase text-primary/90 mb-2"
+                   style={{ letterSpacing: '0.22em' }}>
+                  {active ? CAPABILITIES[active.i].n : ''}
+                </p>
+                <p className="text-[12.5px] leading-relaxed text-ink-2/90">
+                  {active ? CAPABILITIES[active.i].desc : ''}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -630,7 +924,10 @@ function Features() {
 // Work
 // ─────────────────────────────────────────────────────────────────────────────
 
-function ProjectImage({ image, alt, ratio = '16/9' }) {
+// `pos` is the vertical crop anchor. Defaults to the top, which suits a flat
+// screenshot; a mockup with the subject low in the frame wants it further down
+// so the object itself is not the part that gets cut.
+function ProjectImage({ image, alt, ratio = '16/9', pos = 'top' }) {
   // A file that 404s falls back to the same placeholder as no file at all,
   // rather than leaving a broken-image icon in the layout.
   const [failed, setFailed] = useState(false)
@@ -646,8 +943,13 @@ function ProjectImage({ image, alt, ratio = '16/9' }) {
   return (
     <div className="relative w-full rounded-xl overflow-hidden border border-divider bg-deep"
       style={{ aspectRatio: ratio }}>
+      {/* Held at a standing scale above 1 so the frame crops into the plate
+          rather than sitting back from it — the interface inside a mockup is
+          the subject, not the desk around it. Hover pushes it a little
+          further from that resting point. */}
       <img src={image} alt={alt} loading="lazy" onError={() => setFailed(true)}
-        className="w-full h-full object-cover object-top transition-transform duration-[900ms] ease-out group-hover:scale-[1.03]"/>
+        style={{ objectPosition: `center ${pos}` }}
+        className="w-full h-full object-cover scale-[1.13] transition-transform duration-[900ms] ease-out group-hover:scale-[1.17]"/>
       <div className="absolute inset-0 pointer-events-none"
         style={{ background:'linear-gradient(to top, rgba(16,12,10,0.55) 0%, transparent 45%)' }} aria-hidden="true"/>
     </div>
@@ -674,7 +976,7 @@ function ProjectCard({ project, index, active, onOpen, onFocus }) {
       onClick={active ? undefined : onFocus}
       aria-hidden={!active}
     >
-      <ProjectImage image={project.image} alt={project.title}/>
+      <ProjectImage image={project.image} alt={project.title} pos={project.imagePos}/>
 
       <div className="px-1.5 pt-4 pb-0.5">
         <p className="font-mono text-[9.5px] uppercase text-primary/60" style={{ letterSpacing: '0.22em' }}>
@@ -687,17 +989,127 @@ function ProjectCard({ project, index, active, onOpen, onFocus }) {
 
         <p className="lede mt-2 text-[12.5px]">{project.subtitle}</p>
 
-        <div className="flex flex-wrap gap-1.5 mt-3.5">
-          {project.tools.slice(0, 4).map(t => <span key={t} className="tag">{t}</span>)}
-          {project.tools.length > 4 && <span className="tag !text-faint">+{project.tools.length - 4}</span>}
-        </div>
-
+        {/* The stack sits inside the case study, not on the card — the card
+            stays title, one line, and the way in. */}
         <button type="button" onClick={onOpen} tabIndex={active ? 0 : -1}
-          className="btn btn-solid w-full mt-4 !py-3 !text-[12.5px]">
+          className="btn btn-solid w-full mt-5 !py-3 !text-[12.5px]">
           View Case Study <ArrowUpRight className="h-3.5 w-3.5"/>
         </button>
       </div>
     </article>
+  )
+}
+
+// Hoisted so its identity is stable — useInView keys its effect on this, and
+// a fresh object each render would rebuild the observer every time.
+const PLATE_IO = { threshold: 0.08, rootMargin: '0px 0px -4% 0px' }
+
+// One plate in the case study. Reveals itself rather than relying on the
+// page-level useReveal sweep, which runs before a modal exists. Intrinsic
+// width/height keep the aspect ratio exact and stop the layout jumping as
+// each image lands.
+function Plate({ item, delay = 0, priority = false }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, PLATE_IO)
+
+  return (
+    <figure ref={ref} className="reveal-plate" data-in={inView || undefined}
+            style={{ transitionDelay: `${delay}ms` }}>
+      {/* A standing scale inside the clipped frame. The box keeps the image's
+          own proportions — the transform is visual only, so nothing reflows —
+          while the margin around the subject is cropped away and the screen
+          inside the mockup comes forward. */}
+      <div className="overflow-hidden rounded-xl sm:rounded-2xl border border-divider bg-deep">
+        <img
+          src={item.src}
+          alt={item.label}
+          width={item.w}
+          height={item.h}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding="async"
+          className="block w-full h-auto scale-[1.08] origin-center"
+        />
+      </div>
+      {(item.label || item.caption) && (
+        <figcaption className="mt-3.5 sm:mt-4 flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+          {item.label && (
+            <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary/70 shrink-0">
+              {item.label}
+            </span>
+          )}
+          {item.caption && (
+            <span className="text-[12.5px] leading-relaxed text-muted max-w-[52ch]">
+              {item.caption}
+            </span>
+          )}
+        </figcaption>
+      )}
+    </figure>
+  )
+}
+
+// The image story: a wide plate, then a pair, then a small detail held against
+// open space. Rows carry their own shape so the rhythm stays varied rather
+// than collapsing into an even grid.
+function CaseStudyGallery({ gallery }) {
+  if (!gallery?.length) return null
+
+  return (
+    <section className="mt-14 sm:mt-20 border-t border-divider pt-10 sm:pt-14">
+      <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary/60 mb-8 sm:mb-12">
+        Inside the system
+      </p>
+
+      <div className="space-y-14 sm:space-y-20 lg:space-y-28">
+        {gallery.map((row, r) => {
+          if (row.kind === 'pair') {
+            return (
+              // Weighted 5/7 rather than even halves: the taller portrait gets
+              // the narrower track, so the two plates land at roughly the same
+              // height without either being cropped.
+              <div key={r} className="grid gap-8 sm:gap-10 lg:gap-14
+                                      lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start">
+                {row.items.map((item, i) => (
+                  <Plate key={item.src} item={item} delay={i * 110}/>
+                ))}
+              </div>
+            )
+          }
+
+          if (row.kind === 'detail') {
+            return (
+              // A small plate on the left. Anything in `stack` fills the space
+              // beside it, one above the other, offset to leave a gutter
+              // between the two columns rather than butting them together.
+              // `wideLead` gives the left plate the wider track — worth it when
+              // the stack beside it is tall enough to run away in height.
+              // Class strings stay literal so Tailwind can see them.
+              <div key={r} className="grid gap-10 sm:gap-12 lg:gap-0 lg:grid-cols-12 lg:items-start">
+                <div className={row.wideLead ? 'lg:col-span-6' : 'lg:col-span-5'}>
+                  {row.items.map(item => <Plate key={item.src} item={item}/>)}
+                </div>
+
+                {row.stack?.length ? (
+                  <div className={`space-y-10 sm:space-y-12 ${
+                    row.wideLead ? 'lg:col-span-5 lg:col-start-8' : 'lg:col-span-6 lg:col-start-7'
+                  }`}>
+                    {row.stack.map((item, i) => (
+                      <Plate key={item.src} item={item} delay={(i + 1) * 110}/>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            )
+          }
+
+          return (
+            <div key={r}>
+              {row.items.map(item => <Plate key={item.src} item={item}/>)}
+            </div>
+          )
+        })}
+      </div>
+    </section>
   )
 }
 
@@ -715,7 +1127,7 @@ function ProjectModal({ project, onClose }) {
       <div className="absolute inset-0 bg-deep/85 backdrop-blur-md" onClick={onClose} aria-hidden="true" />
       <motion.div
         role="dialog" aria-modal="true" aria-label={project.title}
-        className="relative w-full max-w-3xl max-h-[88vh] overflow-y-auto bg-surface rounded-2xl border border-divider"
+        className="relative w-full max-w-3xl lg:max-w-6xl max-h-[88vh] overflow-y-auto bg-surface rounded-2xl border border-divider"
         initial={{ opacity: 0, y: 22, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 22, scale: 0.98 }}
@@ -727,7 +1139,12 @@ function ProjectModal({ project, onClose }) {
         </button>
 
         <div className="p-6 sm:p-10">
-          <div className="mb-8"><ProjectImage image={project.image} alt={project.title}/></div>
+          {/* A case study with its own gallery opens on the writing — the
+              images tell the story further down. Everything else keeps the
+              single framed plate up top. */}
+          {!project.gallery && (
+            <div className="mb-8"><ProjectImage image={project.image} alt={project.title}/></div>
+          )}
           <p className="eyebrow mb-4">{String(project.id).padStart(2, '0')} · Case study</p>
           <h3 className="font-display text-[20px] sm:text-[24px] font-medium text-ink tracking-tight leading-tight">{project.title}</h3>
           <p className="lede text-[14.5px] mt-3">{project.subtitle}</p>
@@ -736,12 +1153,19 @@ function ProjectModal({ project, onClose }) {
             {[{ key:'problem', label:'Problem' }, { key:'solution', label:'Solution' }, { key:'result', label:'Result' }].map(({ key, label }) => (
               <div key={key} className="border-t border-divider py-6 grid sm:grid-cols-12 gap-3 sm:gap-6">
                 <p className="sm:col-span-3 font-mono text-[9px] uppercase tracking-[0.2em] text-primary/60 pt-1">{label}</p>
-                <p className="sm:col-span-9 text-ink-2 text-[14.5px] leading-relaxed">{project[key]}</p>
+                {/* A field may be a single string or several paragraphs. */}
+                <div className="sm:col-span-9 space-y-4">
+                  {(Array.isArray(project[key]) ? project[key] : [project[key]]).map((para, i) => (
+                    <p key={i} className="text-ink-2 text-[14.5px] leading-relaxed">{para}</p>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
 
-          <div className="flex flex-wrap gap-2 mt-8 pt-6 border-t border-divider">
+          <CaseStudyGallery gallery={project.gallery}/>
+
+          <div className="flex flex-wrap gap-2 mt-14 sm:mt-20 pt-6 border-t border-divider">
             {project.tools.map(tool => <span key={tool} className="tag">{tool}</span>)}
           </div>
         </div>
@@ -798,7 +1222,7 @@ function Projects() {
           eyebrow="Selected work"
           title="The work,"
           serif="in context."
-          lede="Three systems built end to end. Open any one for the full problem, solution, and result."
+          lede="Open any one for the full problem, solution, and result."
         />
       </div>
 
@@ -867,11 +1291,30 @@ function Projects() {
 // Process
 // ─────────────────────────────────────────────────────────────────────────────
 
+// The engagement, end to end: what happens in each phase and what the client
+// is left holding at the end of it. One list rather than a process section
+// followed by a deliverables section saying the same thing twice.
 const PHASES = [
-  { n: '01', lead: 'Create the container.', rest: 'The full audit, with your team.' },
-  { n: '02', lead: 'Lay the foundation.',   rest: 'Build on your tools. Guardrails on anything touching money.' },
-  { n: '03', lead: 'Activation.',           rest: 'Switch on, test live, tune it to sound like you.' },
-  { n: '04', lead: 'Integration.',          rest: 'Hand over, train your team, refine as you grow.' },
+  {
+    n: '01',
+    title: 'Audit & Strategy',
+    desc:  'Map your business, identify repetitive work, and find the highest-impact opportunities for automation.',
+  },
+  {
+    n: '02',
+    title: 'Build & Connect',
+    desc:  'Build the AI agents and workflows, then connect them to the tools your business already uses.',
+  },
+  {
+    n: '03',
+    title: 'Test & Activate',
+    desc:  'Test everything in real scenarios, refine the systems, and launch them into your day-to-day operations.',
+  },
+  {
+    n: '04',
+    title: 'Handover & Support',
+    desc:  'Train your team, document the systems, and provide ongoing optimization when you need it.',
+  },
 ]
 
 function Process() {
@@ -880,81 +1323,34 @@ function Process() {
       <div className="shell">
         <SectionHead
           eyebrow="How it works"
-          title="Four phases."
-          lede="One install. We run it the same way every time."
+          title="From audit to"
+          serif="automation."
         />
 
-        {/* Numeral rail on the left, one flowing line of copy on the right —
-            the bold lead-in and the rest read as a single sentence. */}
-        <div className="mt-10 sm:mt-12">
+        {/* Numeral rail on the left, the phase and what it leaves behind on the
+            right. The rows are the same hairline-separated rhythm as before,
+            opened up so four of them still read as a journey rather than a
+            list to get through. */}
+        <div className="mt-12 sm:mt-16">
           {PHASES.map(p => (
             <div key={p.n}
-                 className="reveal border-t border-divider py-5 sm:py-6
-                            grid grid-cols-[auto_1fr] gap-5 sm:gap-8 items-baseline">
-              <span className="font-display text-[22px] sm:text-[26px] font-light text-ink-2/70
-                               leading-none tracking-tight tabular-nums">
+                 className="reveal border-t border-divider py-7 sm:py-9
+                            grid grid-cols-[auto_1fr] gap-6 sm:gap-10 items-start">
+              <span className="font-display text-[24px] sm:text-[30px] font-light text-primary/75
+                               leading-none tracking-tight tabular-nums pt-0.5">
                 {p.n}
               </span>
-              <p className="text-[14px] sm:text-[15px] leading-relaxed text-muted">
-                <span className="font-semibold text-ink">{p.lead}</span>{' '}{p.rest}
-              </p>
+              <div>
+                <h3 className="font-display text-[16px] sm:text-[18px] font-medium text-ink tracking-tight">
+                  {p.title}
+                </h3>
+                <p className="lede mt-2 text-[13.5px] sm:text-[14px] max-w-[58ch]">
+                  {p.desc}
+                </p>
+              </div>
             </div>
           ))}
           <div className="rule"/>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// The install
-// ─────────────────────────────────────────────────────────────────────────────
-
-const DELIVERABLES = [
-  {
-    title: 'The full audit',
-    desc:  'I map your business with your team and find what to take off your plate first',
-  },
-  {
-    title: 'Every system built and tuned',
-    desc:  'Sales, support, content, and operations, built on your tools and tuned to sound like you',
-  },
-  {
-    title: 'Your team trained',
-    desc:  'I hand it over and upskill your people so it runs without me',
-  },
-  {
-    title: 'Ongoing support',
-    desc:  'Upkeep and staying ahead of every update. Flexible, pause whenever things are running smoothly',
-  },
-]
-
-function Install() {
-  return (
-    <section id="install" className="scroll-mt-24 py-12 sm:py-14 lg:py-16">
-      <div className="shell">
-        <SectionHead
-          eyebrow="The install"
-          title="What you get."
-          lede="One engagement. Everything built, tuned, and handed over."
-        />
-
-        {/* The whole deliverable list sits inside one panel — it reads as a
-            single scope of work rather than four separate offers. */}
-        <div className="reveal panel rounded-3xl mt-9 sm:mt-10 px-6 sm:px-8 py-2 sm:py-3 max-w-prose">
-          {DELIVERABLES.map(d => (
-            <div key={d.title} className="border-t border-divider first:border-t-0 py-5 sm:py-6">
-              <h3 className="font-display text-[15px] sm:text-[16px] font-medium text-ink tracking-tight">
-                {d.title}
-              </h3>
-              <p className="lede mt-1.5 text-[13px] sm:text-[13.5px]">{d.desc}</p>
-            </div>
-          ))}
-
-          <p className="text-muted text-[13px] sm:text-[13.5px] leading-relaxed border-t border-divider pt-5 pb-6">
-            We scope it on the call, to exactly what your business needs. Then we start.
-          </p>
         </div>
       </div>
     </section>
@@ -966,16 +1362,28 @@ function Install() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const AUDIENCE = [
-  { n: '01', lead: 'You run a real company.',   rest: 'Business operations are eating you alive.' },
-  { n: '02', lead: 'You want your time back.',  rest: 'Not another tool to manage. A system that runs without you.' },
-  { n: '03', lead: 'You move fast.',            rest: 'You can describe what you want in plain English and let me build it live.' },
+  {
+    n: '01',
+    lead: 'You run a growing business.',
+    rest: 'Your team is spending too much time on repetitive work, follow-ups, and admin.',
+  },
+  {
+    n: '02',
+    lead: 'You want your time back.',
+    rest: 'You want systems that handle the work without adding another tool for your team to manage.',
+  },
+  {
+    n: '03',
+    lead: 'You want to move faster.',
+    rest: 'You have ideas for improving your business and want someone to turn them into working systems.',
+  },
 ]
 
 function Audience() {
   return (
     <section id="who" className="scroll-mt-24 py-12 sm:py-14 lg:py-16">
       <div className="shell">
-        <SectionHead eyebrow="Who this is for" title="Operators, not beginners."/>
+        <SectionHead eyebrow="Who this is for" title="Built for businesses" serif="ready to automate."/>
 
         {/* Same numeral-and-sentence rhythm as the phases above, but the
             numerals sit at body size here — these are qualifiers, not steps. */}
@@ -1006,45 +1414,62 @@ function About() {
   return (
     <section id="about" className="scroll-mt-24 py-12 sm:py-14 lg:py-16">
       <div className="shell">
-        <SectionHead eyebrow="About me" title="AI Automation Builder" serif="& AI Auditor."/>
 
-        <div className="mt-10 sm:mt-12 grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        {/* Heading top-left, portrait filling the right and spanning both rows,
+            the labelled copy beneath the heading. Explicit row placement keeps
+            the desktop composition while letting the single column stack as
+            heading → portrait → copy, rather than stranding the portrait at
+            the bottom of the section. */}
+        <div className="grid gap-10 lg:gap-x-16 lg:gap-y-10 lg:grid-cols-12 lg:items-start">
 
-          {/* Portrait */}
-          <div className="reveal lg:col-span-4 lg:sticky lg:top-28">
+          <SectionHead
+            eyebrow="About me"
+            title="AI Automation Builder"
+            serif="& AI Auditor."
+            className="lg:col-span-6 lg:col-start-1 lg:row-start-1"
+          />
+
+          {/* Square source cropped to a portrait frame — the crop is what makes
+              it read as close rather than distant. Centre holds the subject. */}
+          <div className="reveal lg:col-span-6 lg:col-start-7 lg:row-start-1 lg:row-span-2 lg:sticky lg:top-28">
             <div className="relative rounded-2xl overflow-hidden border border-divider bg-surface">
-              <img src="/profile.jpg" alt="Alfarid Bulbula — AI Automation Builder" loading="lazy"
-                className="w-full h-auto object-cover transition-transform duration-[900ms] ease-out hover:scale-[1.02]"/>
+              <img
+                src="/profile.jpg"
+                alt="Alfarid Bulbula — AI Automation Builder"
+                loading="lazy"
+                decoding="async"
+                className="w-full aspect-[4/5] object-cover object-center
+                           transition-transform duration-[900ms] ease-out hover:scale-[1.02]"
+              />
               <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none" aria-hidden="true"
-                style={{ background:'linear-gradient(to top, rgba(16,12,10,0.6), transparent)' }}/>
-            </div>
-
-            <div className="mt-4 grid grid-cols-3 gap-2">
-              {SOCIAL_LINKS.map(({ label, href, Icon }) => (
-                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                  className="btn btn-ghost !px-0 !py-3 !text-[12.5px]" aria-label={label}>
-                  <Icon className="h-3.5 w-3.5"/> {label}
-                </a>
-              ))}
-              <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_EMAIL}`} target="_blank" rel="noopener noreferrer"
-                className="btn btn-ghost !px-0 !py-3 !text-[12.5px]" aria-label="Email">
-                <Mail className="h-3.5 w-3.5"/> Email
-              </a>
+                style={{ background:'linear-gradient(to top, rgba(16,12,10,0.55), transparent)' }}/>
             </div>
           </div>
 
-          {/* Points — a labelled index rather than a bulleted list */}
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-6 lg:col-start-1 lg:row-start-2">
+            {/* Label above its paragraph, hairline between each — the same
+                mono label and muted body used everywhere else. */}
             {ABOUT_POINTS.map((pt, i) => (
-              <div key={i} className="reveal border-t border-divider py-5 sm:py-6 grid sm:grid-cols-12 gap-2 sm:gap-5">
-                <p className="sm:col-span-3 font-mono text-[9px] uppercase tracking-[0.2em] text-primary/55 pt-1.5">{pt.k}</p>
-                <p className="sm:col-span-9 text-muted text-[13.5px] leading-relaxed">{pt.text}</p>
+              <div key={i} className="reveal border-t border-divider first:border-t-0 py-6 sm:py-7">
+                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary/70">{pt.k}</p>
+                <p className="text-muted text-[13.5px] sm:text-[14px] leading-relaxed mt-2.5 max-w-[52ch]">
+                  {pt.text}
+                </p>
               </div>
             ))}
-            <div className="rule"/>
-            <div className="reveal flex items-center gap-2.5 pt-8">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#9CAF7A] ring-pulse-green shrink-0"/>
-              <span className="font-mono text-[9.5px] uppercase tracking-[0.2em] text-muted">Available for new projects · 2026</span>
+
+            <div className="reveal flex flex-wrap gap-2.5 sm:gap-3 pt-8 border-t border-divider">
+              {SOCIAL_LINKS.map(({ label, href, Icon }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                  className="btn btn-ghost !py-3 !text-[12.5px]" aria-label={label}>
+                  <Icon className="h-3.5 w-3.5"/> {label}
+                </a>
+              ))}
+              <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_EMAIL}`}
+                target="_blank" rel="noopener noreferrer"
+                className="btn btn-ghost !py-3 !text-[12.5px]" aria-label="Email">
+                <Mail className="h-3.5 w-3.5"/> Email
+              </a>
             </div>
           </div>
 
@@ -1087,31 +1512,38 @@ function ContactForm() {
   }
 
   return (
-    <section id="contact" className="scroll-mt-24 py-12 sm:py-14 lg:py-16 border-t border-divider">
+    <section id="contact" className="scroll-mt-24 py-12 sm:py-14 lg:py-16">
       <div className="shell">
 
-        <div ref={headingRef} className="col">
-          <p className="eyebrow flex items-center gap-3 mb-6">
-            <span className="inline-block h-px w-6 bg-primary/30" aria-hidden="true"/>
-            <TextScramble as="span" trigger={headingInView} duration={0.5} speed={0.025}>GET IN TOUCH</TextScramble>
-          </p>
-          <h2 className="h-statement text-[32px] sm:text-[42px] lg:text-[50px]">
-            Let&apos;s build{' '}
-            <TextScramble as="span" trigger={headingInView} duration={1.1} speed={0.03} className="italic text-primary">
-              something real.
-            </TextScramble>
-          </h2>
-        </div>
+        {/* The divider belongs to the page column, not the viewport, so it
+            lines up with every other rule on the site. */}
+        <div className="rule mb-12 sm:mb-14"/>
 
-        <div className="mt-10 sm:mt-12 grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        {/* Heading sits in the left column rather than above the grid, so the
+            form panel starts level with the eyebrow and the two halves read
+            as one composition. */}
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
 
-          <div className="reveal lg:col-span-5 flex flex-col gap-8">
-            <p className="lede text-[13.5px] max-w-[42ch]">
+          <div ref={headingRef} className="reveal lg:col-span-5 flex flex-col gap-7">
+            <div>
+              <p className="eyebrow flex items-center gap-3 mb-6">
+                <span className="inline-block h-px w-6 bg-primary/30" aria-hidden="true"/>
+                <TextScramble as="span" trigger={headingInView} duration={0.5} speed={0.025}>GET IN TOUCH</TextScramble>
+              </p>
+              <h2 className="h-statement text-[32px] sm:text-[42px] lg:text-[50px]">
+                Let&apos;s build{' '}
+                <span>something real.</span>
+              </h2>
+            </div>
+
+            <p className="lede text-[13.5px] max-w-[46ch]">
               If you have a repetitive process you want automated, or an idea for an AI system —
               send a message. I read everything and reply directly, even if the project isn&apos;t a fit.
             </p>
 
-            <div className="relative group max-w-[300px] mt-2">
+            {/* Full column width — it is the visual anchor of this half, not a
+                thumbnail beside the copy. */}
+            <div className="relative group mt-1">
               <div className="shake-on-hover relative rounded-xl overflow-hidden border border-divider bg-surface">
                 <img
                   src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNDV3YXl1cDZzbHJhbmtsMGRteXpia2MxdXN5ZDA1MTAzcThtNHhocSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/SpopD7IQN2gK3qN4jS/giphy.gif"
@@ -1124,28 +1556,34 @@ function ContactForm() {
               </div>
             </div>
 
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
-              Typical response within 24 hours
-            </p>
+            {/* Availability and response time on one line, sat directly under
+                the illustration. */}
+            <div className="flex items-center gap-2.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#9CAF7A] ring-pulse-green shrink-0"/>
+              <span className="font-mono text-[9.5px] uppercase tracking-[0.2em] text-muted">
+                Available for new projects <span className="text-faint mx-0.5">•</span> 24h response
+              </span>
+            </div>
           </div>
 
           <div className="reveal lg:col-span-7">
-            <div className="panel p-5 sm:p-6 rounded-2xl">
+            <div className="panel p-6 sm:p-8 lg:p-10 rounded-2xl">
               {status === 'sent' ? <SentState/> : (
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <Field label="Name"  id="f-name"  type="text"  value={form.name}  onChange={set('name')}  placeholder="Your name"       required/>
-                    <Field label="Email" id="f-email" type="email" value={form.email} onChange={set('email')} placeholder="you@company.com" required/>
-                  </div>
+                <form onSubmit={handleSubmit} className="flex flex-col gap-6 sm:gap-7">
+                  {/* One field per row, each running the full width of the
+                      panel — a long, shallow field rather than two short ones
+                      sharing the line. */}
+                  <Field label="Name"  id="f-name"  type="text"  value={form.name}  onChange={set('name')}  placeholder="Your name"       required/>
+                  <Field label="Email" id="f-email" type="email" value={form.email} onChange={set('email')} placeholder="you@company.com" required/>
                   <Field
                     label="What do you want to automate?"
-                    id="f-message" type="textarea" rows={4}
+                    id="f-message" type="textarea" rows={7}
                     value={form.message} onChange={set('message')}
                     placeholder="Describe the repetitive process, the tools you use, and what outcome you're after…"
                     required
                   />
                   <button type="submit" disabled={status === 'sending'}
-                    className="btn btn-solid w-full !py-3 !text-[13px] mt-1 disabled:opacity-60 disabled:cursor-not-allowed">
+                    className="btn btn-solid w-full !py-4 !text-[14px] mt-1 disabled:opacity-60 disabled:cursor-not-allowed">
                     {status === 'sending' ? 'Sending…' : (<>Send message <ArrowUpRight className="h-4 w-4"/></>)}
                   </button>
                 </form>
@@ -1165,8 +1603,11 @@ function ContactForm() {
 
 function Footer() {
   return (
-    <footer className="border-t border-divider py-14">
+    <footer className="py-14">
       <div className="shell">
+        {/* Inside the page column, matching every other rule on the site. */}
+        <div className="rule mb-12 sm:mb-14"/>
+
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <div className="flex items-center gap-2.5">
             <img src="/logo-icon.png" alt="" className="h-7 w-7 rounded-lg object-contain bg-black shrink-0" aria-hidden="true"/>
@@ -1207,7 +1648,6 @@ export default function App() {
         <Features/>
         <Projects/>
         <Process/>
-        <Install/>
         <Audience/>
         <About/>
         <ContactForm/>
